@@ -3,6 +3,8 @@ kdevine
 
 > Multivariate kernel density estimation with vine copulas
 
+[![Build status Linux](https://travis-ci.org/tnagler/kdevine.svg?branch=master)](https://travis-ci.org/tnagler/kdevine) 
+
 This package implements a vine copula based kernel density estimator. The 
 estimator does not suffer from the curse of dimensionality and is therefore well 
 suited for high-dimensional applications (see, Nagler and Czado, 2015). 
