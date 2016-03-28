@@ -10,7 +10,7 @@ warnings_are_errors: false
 
 cran: http://cran.rstudio.com
 
-sudo: false
+sudo: required
 
 apt_packages:
   - gsl-bin
