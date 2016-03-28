@@ -1,0 +1,23 @@
+language: r
+cache: packages
+
+r:
+  - oldrel
+  - release
+  - devel
+
+warnings_are_errors: false
+
+cran: http://cran.rstudio.com
+
+apt_packages:
+  - gsl-bin
+  - libgsl0-dbg
+  - libgsl0-dev
+  - libgsl0ldbl
+  - libcurl4-openssl-dev
+  - libxml2-dev
+
+r_github_packages:
+ - tnagler/VineCopula
+
