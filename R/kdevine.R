@@ -37,7 +37,7 @@ kdevine <- function(data, mult.1d = 1, ...) {
     if (length(list(...)$bw) != d && !is.null(list(...)$bw))
         stop("'bw' hast o be of length d")
     if (is.null((list(...)$copula.type)))
-        copula.type <- "kernel"
+        copula.type <- "kde"
     if (ncol(data) != d) 
         data <- t(data)
     stopifnot(ncol(data) == d)
@@ -59,7 +59,6 @@ kdevine <- function(data, mult.1d = 1, ...) {
         # transform to copula data
         u <- sapply(1:d, function(k) pkde1d(data[, k], marg.dens[[k]]))
         
-        # estimate vine for type "kernel"
         if (copula.type == "kde") {
             res$vine  <- suppressWarnings(
                 kdevinecop(u,
@@ -70,9 +69,7 @@ kdevine <- function(data, mult.1d = 1, ...) {
                            trunc.level = list(...)$trunc.level,
                            cores       = list(...)$cores)
             )
-        }
-        # estimate vine for type "parametric"
-        if (copula.type == "parametric") {
+        } else if (copula.type == "parametric") {
             # get family and matrix if available
             fam <- list(...)$familyset
             if (is.null(fam)) 
@@ -94,6 +91,8 @@ kdevine <- function(data, mult.1d = 1, ...) {
                                familyset = fam,
                                Matrix = mat)
             }
+        } else {
+            stop("copula.type not implemented.")
         }        
     }
     
