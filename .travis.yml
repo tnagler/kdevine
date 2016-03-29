@@ -22,4 +22,4 @@ apt_packages:
 
 r_github_packages:
  - tnagler/VineCopula
-
+ - tnagler/kdecopula
