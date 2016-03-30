@@ -25,7 +25,7 @@ High-dimensional kernel density estimation based on vine copulas
 data(wdbc)  # load data
 
 # estimate density (use xmin to indicate positive support)
-fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
+fit <- kdevine(wdbc[, 5:8], xmin = rep(0, 4))
 dkdevine(c(1000, 0.1, 0.1), fit)  # evaluate density estimate
 
 }

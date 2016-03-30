@@ -4,7 +4,7 @@
 \alias{kde1d}
 \title{Univariate kernel density estimation for bounded and unbounded support}
 \usage{
-kde1d(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, fast = TRUE)
+kde1d(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1)
 }
 \arguments{
 \item{data}{vector of length \eqn{n}.}
@@ -13,13 +13,10 @@ kde1d(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, fast = TRUE)
 
 \item{xmax}{upper bound for the support of the density.}
 
-\item{bw}{bandwidth parameter; has to be a positive number or \code{NULL}; 
+\item{bw}{bandwidth parameter; has to be a positive number or \code{NULL};
 the latter calls an automatic selection routine.}
 
 \item{mult}{numeric; the actual bandwidth used is \eqn{bw*mult}.}
-
-\item{fast}{logical, only relevant when \code{xmin} or \code{xmax} are finite; 
-option for faster bandwidth selection (see \emph{Details}).}
 }
 \value{
 An object of class \code{kde1d}.
@@ -28,7 +25,7 @@ An object of class \code{kde1d}.
 Univariate kernel density estimation for bounded and unbounded support
 }
 \details{
-If \code{xmin} or \code{xmax} are finite, the density estimate will be 0 
+If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for boundary bias. \cr
 \cr
 If additionally \code{fast=TRUE} and \eqn{n>500}, the least squares cross

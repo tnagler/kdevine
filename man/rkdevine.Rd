@@ -28,7 +28,7 @@ dat <- wdbc[, 5:8]
 pairs(dat)  # plot data
 
 # estimate density (use xmin to indicate positive support)
-fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
+fit <- kdevine(wdbc[, 5:8], xmin = rep(0, 4))
 pairs(rkdevine(nrow(dat), fit))  # plot simulated data
 
 }
