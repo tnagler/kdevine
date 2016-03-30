@@ -15,7 +15,7 @@ rkdevinecop(n, obj, quasi = FALSE)
 
 \item{obj}{\code{kdevinecop} object.}
 
-\item{stable}{logical; option for stabilizing the estimator: the estimated 
+\item{stable}{logical; option for stabilizing the estimator: the estimated
 pair copula density is cut off at \eqn{50}.}
 
 \item{n}{integer; number of observations.}
@@ -25,12 +25,12 @@ numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, see
 \code{\link[qrng:ghalton]{ghalton}}).}
 }
 \value{
-A numeric vector of the density/cdf or a \eqn{n x 2} matrix of 
+A numeric vector of the density/cdf or a \eqn{n x 2} matrix of
 simulated data.
 }
 \description{
-A vine copula density estimate (stored in a \code{kdevinecop} object) 
-can be evaluated on arbitrary points with \code{dkevinecop}. Furthermore, 
+A vine copula density estimate (stored in a \code{kdevinecop} object)
+can be evaluated on arbitrary points with \code{dkevinecop}. Furthermore,
 you can simulate from the estimated density with \code{rkdevinecop}.
 }
 \examples{
@@ -46,7 +46,7 @@ Thomas Nagler
 \references{
 Nagler, T., Czado, C. (2015) \cr
 Evading the curse of dimensionality in nonparametric density estimation. \cr
-arXiv:1503.03305v2 [stat.ME] 
+arXiv:1503.03305v2 [stat.ME]
 
 Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). \cr
 Selecting and estimating regular vine copulae and application to financial returns. \cr

@@ -11,7 +11,7 @@ kdevinecop(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
 \item{data}{(\eqn{n x d}) matrix of copula data (have to lie in \eqn{[0,1^d]}).}
 
 \item{matrix}{R-Vine matrix (\eqn{n x d}) specifying the structure of the vine;
-if \code{NA} (default) the structure selection heuristic of Dissman et al. 
+if \code{NA} (default) the structure selection heuristic of Dissman et al.
 (2013) is applied.}
 
 \item{method}{see \code{\link[kdecopula:kdecop]{kdecop}}.}
@@ -19,13 +19,13 @@ if \code{NA} (default) the structure selection heuristic of Dissman et al.
 \item{renorm.iter}{see \code{\link[kdecopula:kdecop]{kdecop}}.}
 
 \item{test.level}{significance level for independence test. If you provide a
-number in [0, 1], an independence test 
+number in [0, 1], an independence test
 (\code{\link[VineCopula:BiCopIndTest]{BiCopIndTest}}) will be performed for
-each pair; if the null hypothesis of independence cannot be rejected, the 
-independence copula will be set for this pair. If \code{test.level = NA} 
+each pair; if the null hypothesis of independence cannot be rejected, the
+independence copula will be set for this pair. If \code{test.level = NA}
 (default), no independence test will be performed.}
 
-\item{trunc.level}{integer; the truncation level. All pair copulas in trees 
+\item{trunc.level}{integer; the truncation level. All pair copulas in trees
 above the truncation level will be set to independence.}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
@@ -54,7 +54,7 @@ dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
 \references{
 Nagler, T., Czado, C. (2015) \cr
 Evading the curse of dimensionality in nonparametric density estimation. \cr
-arXiv:1503.03305v2 [stat.ME] 
+arXiv:1503.03305v2 [stat.ME]
 
 Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). \cr
 Selecting and estimating regular vine copulae and application to financial
