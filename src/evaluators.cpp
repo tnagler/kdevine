@@ -103,7 +103,7 @@ NumericVector eval_qkde1d(const NumericVector x,
 {
     NumericVector out(qev.size()), x0, x1, ans, val;
     ans = 0.0, val = 0.0;
-    double tol = ::fmax(1e-12 * (x1[0] - x0[0]), 1e-20);
+    double tol = ::fmax(1e-10 * (x1[0] - x0[0]), 1e-10);
     
     for (int i = 0; i < qev.size(); ++i) {
         int br = 0;
@@ -122,9 +122,6 @@ NumericVector eval_qkde1d(const NumericVector x,
             br = 1;
         }
 
-        ans = (x0 + x1) / 2.0;
-        val = eval_pkde1d(x, ans, xmin, xmax, bw);
-        
         int maxit = 20;
         for (int it = 0; it < maxit; ++it) {
             ans[0] = (x0[0] + x1[0]) / 2.0;
