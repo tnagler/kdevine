@@ -149,3 +149,41 @@ dkdevine <- function(x, obj) {
     apply(cbind(margvals, vinevals), 1, prod)
 }
 
+
+#' Simulate from a kdevine object
+#'
+#' @param n number of observations.
+#' @param obj a \code{kdevine} object.
+#' @param quasi logical; the default (\code{FALSE}) returns pseudo-random
+#' numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, see
+#' \code{\link[qrng:ghalton]{ghalton}}).
+
+#' @return An \eqn{n x d} matrix of simulated data from the \code{kdevine}
+#' object.
+#'
+#' @seealso
+#' \code{\link{kdevine}},
+#' \code{\link{rkdevinecop}},
+#' \code{\link{rkde1d}},
+#' \code{\link[qrng:ghalton]{ghalton}}
+#'
+#' @examples
+#' data(wdbc)  # load data
+#' dat <- wdbc[, 5:8]
+#'
+#' pairs(dat)  # plot data
+#' fit <- kdevine(dat)  # estimate density
+#' pairs(rkdevine(nrow(dat), fit))  # plot simulated data
+#'
+#' @importFrom VineCopula pobs
+#' @export
+rkdevine <- function(n, obj, quasi = FALSE) {
+    # simulate from copula
+    usim <- rkdevinecop(n, obj$vine, quasi)
+    # apply rank transformation to make data more uniform
+    usim <- pobs(usim, ties.method = "random")
+    # use quantile transformation for marginals
+    sapply(seq_len(ncol(usim)),
+           function(i) qkde1d(usim[, i], obj$marg.dens[[i]]))
+}
+
