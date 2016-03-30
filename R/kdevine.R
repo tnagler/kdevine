@@ -180,8 +180,6 @@ dkdevine <- function(x, obj) {
 rkdevine <- function(n, obj, quasi = FALSE) {
     # simulate from copula
     usim <- rkdevinecop(n, obj$vine, quasi)
-    # apply rank transformation to make data more uniform
-    usim <- pobs(usim, ties.method = "random")
     # use quantile transformation for marginals
     sapply(seq_len(ncol(usim)),
            function(i) qkde1d(usim[, i], obj$marg.dens[[i]]))
