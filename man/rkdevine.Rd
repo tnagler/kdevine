@@ -25,9 +25,10 @@ Simulate from a kdevine object
 \examples{
 data(wdbc)  # load data
 dat <- wdbc[, 5:8]
-
 pairs(dat)  # plot data
-fit <- kdevine(dat)  # estimate density
+
+# estimate density (use xmin to indicate positive support)
+fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
 pairs(rkdevine(nrow(dat), fit))  # plot simulated data
 
 }

@@ -15,7 +15,9 @@
 #'
 #' @examples
 #' data(wdbc)  # load data
-#' fit <- kdevine(wdbc[, 5:7])  # estimate density
+#'
+#' # estimate density (use xmin to indicate positive support)
+#' fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
 #' dkdevine(c(1000, 0.1, 0.1), fit)  # evaluate density estimate
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
@@ -114,7 +116,9 @@ kdevine <- function(data, mult.1d = 1, ...) {
 #'
 #' @examples
 #' data(wdbc)  # load data
-#' fit <- kdevine(wdbc[, 5:7])  # estimate density
+#'
+#' # estimate density (use xmin to indicate positive support)
+#' fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
 #' dkdevine(c(1000, 0.1, 0.1), fit)  # evaluate density estimate
 #'
 #' @export
@@ -170,9 +174,10 @@ dkdevine <- function(x, obj) {
 #' @examples
 #' data(wdbc)  # load data
 #' dat <- wdbc[, 5:8]
-#'
 #' pairs(dat)  # plot data
-#' fit <- kdevine(dat)  # estimate density
+#'
+#' # estimate density (use xmin to indicate positive support)
+#' fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
 #' pairs(rkdevine(nrow(dat), fit))  # plot simulated data
 #'
 #' @importFrom VineCopula pobs

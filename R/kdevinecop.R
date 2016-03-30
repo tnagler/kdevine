@@ -83,8 +83,8 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
     ## sanity checks
     d <- ncol(data)
     n <- nrow(data)
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval (0,1).")
+    if (any(data >= 1) || any(data < 0))
+        stop("Data has be in the interval [0,1].")
     if (n < 2)
         stop("Number of observations has to be at least 2.")
     if (d < 2)

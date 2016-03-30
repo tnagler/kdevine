@@ -19,7 +19,9 @@ Evaluate the density of a kdevine object
 }
 \examples{
 data(wdbc)  # load data
-fit <- kdevine(wdbc[, 5:7])  # estimate density
+
+# estimate density (use xmin to indicate positive support)
+fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
 dkdevine(c(1000, 0.1, 0.1), fit)  # evaluate density estimate
 
 }
