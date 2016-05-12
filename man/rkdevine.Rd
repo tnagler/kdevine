@@ -4,16 +4,12 @@
 \alias{rkdevine}
 \title{Simulate from a kdevine object}
 \usage{
-rkdevine(n, obj, quasi = FALSE)
+rkdevine(n, obj)
 }
 \arguments{
 \item{n}{number of observations.}
 
 \item{obj}{a \code{kdevine} object.}
-
-\item{quasi}{logical; the default (\code{FALSE}) returns pseudo-random
-numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, see
-\code{\link[qrng:ghalton]{ghalton}}).}
 }
 \value{
 An \eqn{n x d} matrix of simulated data from the \code{kdevine}
@@ -35,7 +31,6 @@ pairs(rkdevine(nrow(wdbc), fit))  # plot simulated data
 \seealso{
 \code{\link{kdevine}},
 \code{\link{rkdevinecop}},
-\code{\link{rkde1d}},
-\code{\link[qrng:ghalton]{ghalton}}
+\code{\link{rkde1d}}
 }
 

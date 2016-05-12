@@ -26,11 +26,8 @@ Univariate kernel density estimation for bounded and unbounded support
 }
 \details{
 If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
-outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for boundary bias. \cr
-\cr
-If additionally \code{fast=TRUE} and \eqn{n>500}, the least squares cross
- validation procedure is called on a random subsample of size 500 and rescaled
- to conform with the actual sample size.
+outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
+boundary bias.
 }
 \examples{
 data(wdbc)  # load data

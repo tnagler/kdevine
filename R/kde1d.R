@@ -11,11 +11,8 @@
 #'
 #' @details
 #' If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
-#' outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for boundary bias. \cr
-#' \cr
-#' If additionally \code{fast=TRUE} and \eqn{n>500}, the least squares cross
-#'  validation procedure is called on a random subsample of size 500 and rescaled
-#'  to conform with the actual sample size.
+#' outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
+#' boundary bias.
 #'
 #' @seealso
 #' \code{\link{dkde1d}},
@@ -95,6 +92,7 @@ kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
 #' pkde1d(1000, fit)  # evaluate corresponding cdf
 #'
 #' @useDynLib kdevine
+#' @import Rcpp
 #' @export
 dkde1d <- function(x, obj) {
     eval_kde1d(sort(obj$data), x, obj$xmin, obj$xmax, obj$bw)
@@ -256,4 +254,3 @@ lines.kde1d <- function(x, ev = NULL, ...) {
 #'
 #'     ## return results
 #'     bw
-#' }

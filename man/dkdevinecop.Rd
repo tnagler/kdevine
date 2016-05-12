@@ -8,7 +8,7 @@
 \usage{
 dkdevinecop(u, obj, stable = TRUE)
 
-rkdevinecop(n, obj, quasi = FALSE)
+rkdevinecop(n, obj, U = NULL, quasi = FALSE)
 }
 \arguments{
 \item{u}{\eqn{m x 2} matrix of evaluation points.}
@@ -19,6 +19,9 @@ rkdevinecop(n, obj, quasi = FALSE)
 pair copula density is cut off at \eqn{50}.}
 
 \item{n}{integer; number of observations.}
+
+\item{U}{(optional) \eqn{n x d} matrix of independent uniform random
+variables.}
 
 \item{quasi}{logical; the default (\code{FALSE}) returns pseudo-random
 numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, see

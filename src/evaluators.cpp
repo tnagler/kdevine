@@ -5,8 +5,8 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 NumericVector kern_gauss(const NumericVector x) {
     NumericVector out(x.size());
-    for(int i = 0; i < x.size(); ++i){
-        if((abs(x[i]) >= 5)){
+    for (int i = 0; i < x.size(); ++i) {
+        if ((fabs(x[i]) >= 5)){
             out[i] = 0;
         } else {
             // normalize by 0.9999994267 because of truncation
