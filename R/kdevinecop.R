@@ -56,8 +56,7 @@
 #' @importFrom doParallel registerDoParallel
 #' @export
 kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
-                       test.level = NA, trunc.level = NA,
-                       cores = 1, info = FALSE) {
+                       test.level = NA, trunc.level = NA, cores = 1, info = FALSE) {
     ## adjust input
     if (is.null(info))
         info <- FALSE
@@ -197,7 +196,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                     class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
                     cfit <- kdecop(samples,
-                                   mult = ((2^(d - k + 1) - 1))^(1/4),
+                                   mult = 1,#((2^(d - k + 1) - 1))^(1/4),
                                    method = method,
                                    renorm.iter = renorm.iter,
                                    info = info)
@@ -206,10 +205,14 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                 hfit <- list()
                 direct <- indirect <- NULL
                 if (CondDistr$direct[k - 1, i]) {
-                    direct <- hkdecop(samples, obj = cfit, cond.var = 1L)
+                    direct <- hkdecop(samples,
+                                      obj = cfit,
+                                      cond.var = 1L)
                 }
                 if (CondDistr$indirect[k - 1, i]) {
-                    indirect <- hkdecop(samples, obj = cfit, cond.var = 2L)
+                    indirect <- hkdecop(samples,
+                                        obj = cfit,
+                                        cond.var = 2L)
                 }
                 names <- naming(Mold[c(i, k:d), i])
                 res.ki <- list(c = cfit, name = names)
@@ -273,7 +276,6 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                          pair.cAIC   = cAIC,
                          BIC         = sum(BIC),
                          pair.BIC    = BIC)
-
     names(res) <- vapply(1:(d - 1), function(x) paste("T", x, sep = ""), "")
     names(res)[d:(d + 2)] <- c("data", "matrix", "info")
 
