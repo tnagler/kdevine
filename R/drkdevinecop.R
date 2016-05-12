@@ -122,6 +122,8 @@ dkdevinecop <- function(u, obj, stable = TRUE) {
 }
 
 #' @param n integer; number of observations.
+#' @param U (optional) \eqn{n x d} matrix of independent uniform random
+#'  variables.
 #' @param quasi logical; the default (\code{FALSE}) returns pseudo-random
 #' numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, see
 #' \code{\link[qrng:ghalton]{ghalton}}).
@@ -130,9 +132,9 @@ dkdevinecop <- function(u, obj, stable = TRUE) {
 #' @importFrom kdecopula hkdecop
 #' @importFrom stats runif
 #' @export
-rkdevinecop <- function(n, obj, quasi = FALSE) {
+rkdevinecop <- function(n, obj, U = NULL, quasi = FALSE) {
     n <- round(n)
-    stopifnot(n > 1)
+    stopifnot(n > 0)
     stopifnot(is.logical(quasi))
 
     ## get structurte matrix and helper matrices,
@@ -151,12 +153,17 @@ rkdevinecop <- function(n, obj, quasi = FALSE) {
     stopifnot(is.logical(quasi))
     if (!quasi) {
         # simulate independent uniform random variables
-        W <- matrix(runif(n * d), n, d)
+        if (is.null(U)) {
+            U <- matrix(runif(n * d), ncol = d)
+        } else {
+            U <- matrix(U, ncol = d)
+            U <- U[, rev(o), drop = FALSE]
+        }
     } else {
         # generate quasi random numbers
-        W <- ghalton(n, d = d)
+        U <- ghalton(n, d = d)
     }
-    U <- matrix(runif(n * d), ncol = d)
+
     Vdirect <- Vindirect <- array(dim = c(d, d, n))
     for (i in 1:d) {
         Vdirect[i, i, ] <- U[, i]
