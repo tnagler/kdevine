@@ -66,9 +66,11 @@ kdevine <- function(data, mult.1d = 1, ...) {
                 kdevinecop(u,
                            matrix      = list(...)$matrix,
                            method      = list(...)$method,
+                           mult        = list(...)$mult,
                            info        = list(...)$info,
                            test.level  = list(...)$test.level,
                            trunc.level = list(...)$trunc.level,
+                           treecrit    = list(...)$treecrit,
                            cores       = list(...)$cores)
             )
         } else if (copula.type == "parametric") {

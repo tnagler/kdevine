@@ -38,7 +38,7 @@
 #'
 #' @importFrom kdecopula dkdecop hkdecop
 #' @export
-dkdevinecop <- function(u, obj, stable = TRUE) {
+dkdevinecop <- function(u, obj, stable = FALSE) {
     stopifnot(is.numeric(u))
     stopifnot(ncol(u) == ncol(obj$matrix))
     if (any(u > 1) || any(u < 0))

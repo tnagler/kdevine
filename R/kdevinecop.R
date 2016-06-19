@@ -9,6 +9,7 @@
 #'  (2013) is applied.
 #' @param method see \code{\link[kdecopula:kdecop]{kdecop}}.
 #' @param renorm.iter see \code{\link[kdecopula:kdecop]{kdecop}}.
+#' @param mult see \code{\link[kdecopula:kdecop]{kdecop}}.
 #' @param test.level significance level for independence test. If you provide a
 #' number in [0, 1], an independence test
 #' (\code{\link[VineCopula:BiCopIndTest]{BiCopIndTest}}) will be performed for
@@ -17,6 +18,7 @@
 #' (default), no independence test will be performed.
 #' @param trunc.level integer; the truncation level. All pair copulas in trees
 #' above the truncation level will be set to independence.
+#' @param treecrit criterion for structure selection; defaults to \code{"tau"}.
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
 #' within each tree (using \code{\link[foreach]{foreach}}).
 #' @param info logical; if \code{TRUE}, additional information about the
@@ -56,7 +58,8 @@
 #' @importFrom doParallel registerDoParallel
 #' @export
 kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
-                       test.level = NA, trunc.level = NA, cores = 1, info = FALSE) {
+                       mult = 1, test.level = NA, trunc.level = NA,
+                       treecrit = "tau", cores = 1, info = FALSE) {
     ## adjust input
     if (is.null(info))
         info <- FALSE
@@ -64,6 +67,8 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         matrix <- NA
     if (is.null(method))
         method <- "TLL2"
+    if (is.null(mult))
+        mult <- 1
     if (is.null(test.level))
         test.level <- 1
     if (is.na(test.level))
@@ -72,9 +77,12 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         trunc.level <- ncol(data)
     if (is.na(trunc.level))
         trunc.level <- ncol(data)
+    if (is.null(treecrit))
+        treecrit <- "tau"
+    if (is.na(treecrit))
+        treecrit <- "tau"
     if (is.null(cores))
         cores <- 1
-    struct.crit <- "tau"
 
     data <- as.matrix(data)
     matrix <- as.matrix(matrix)
@@ -88,8 +96,8 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         stop("Number of observations has to be at least 2.")
     if (d < 2)
         stop("Dimension has to be at least 2.")
-    if (!(struct.crit %in% c("tau", "AIC", "cAIC")))
-        stop("'struct.crit' not available; please choose either 'tau', 'AIC' or 'cAIC'")
+    if (!(treecrit %in% c("tau", "AIC", "cAIC")))
+        stop("'treecrit' not available; please choose either 'tau', 'AIC' or 'cAIC'")
 
     ## call structure selection routine if no matrix given
     if (any(is.na(matrix)) & d > 2) {
@@ -97,8 +105,9 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         return(structure_select2(data,
                                  type = 0,
                                  method = method,
+                                 mult = mult,
                                  info = info,
-                                 struct.crit = struct.crit,
+                                 struct.crit = treecrit,
                                  test.level = test.level,
                                  trunc.level = trunc.level,
                                  renorm.iter = renorm.iter,
@@ -110,8 +119,9 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         return(structure_select2(data,
                                  type = 1,
                                  method = method,
+                                 mult = mult,
                                  info = info,
-                                 struct.crit = struct.crit,
+                                 struct.crit = treecrit,
                                  test.level = test.level,
                                  trunc.level = trunc.level,
                                  renorm.iter = renorm.iter,
@@ -196,7 +206,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                     class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
                     cfit <- kdecop(samples,
-                                   mult = 1,#((2^(d - k + 1) - 1))^(1/4),
+                                   mult = mult,
                                    method = method,
                                    renorm.iter = renorm.iter,
                                    info = info)

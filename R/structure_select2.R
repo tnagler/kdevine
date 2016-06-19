@@ -1,5 +1,5 @@
-structure_select2 <- function(data, type, method, struct.crit, test.level, trunc.level,
-                              renorm.iter, cores, info, progress = FALSE) {
+structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
+                              trunc.level, renorm.iter, cores, info, progress = FALSE) {
     if (type == 0) {
         type = "RVine"
     } else if(type == 1) {
@@ -25,7 +25,7 @@ structure_select2 <- function(data, type, method, struct.crit, test.level, trunc
         colnames(data) = paste("V", 1:d, sep = "")
 
     ## initialize objects
-    RVine = list(Tree = NULL, Graph = NULL)
+    RVine <- list(Tree = NULL, Graph = NULL)
     res <- as.list(numeric(d - 1))
     for(i in 1:(d - 1))
         res[[i]] <- as.list(numeric(d - i))
@@ -49,13 +49,14 @@ structure_select2 <- function(data, type, method, struct.crit, test.level, trunc
     }
 
     ## build first tree
-    g <- initializeFirstGraph2(data, weights = NA)
-    mst <- findMaximumTauTree2(g, mode = type)
+    g <- initializeFirstGraph2(data, struct.crit = struct.crit, weights = NA)
+    mst <- findMaxTree2(g, mode = type)
 
     ## estimate copulas in first tree and store results
     est <- est.FirstTreeCopulas2(mst,
                                  data,
                                  method = method,
+                                 mult = mult,
                                  info = info,
                                  test.level = test.level,
                                  renorm.iter = renorm.iter,
@@ -68,14 +69,18 @@ structure_select2 <- function(data, type, method, struct.crit, test.level, trunc
 
     ## higher trees
     for (k in 2:(d - 1)) {
-        g <- buildNextGraph2(VineTree, weights = NA, parallel = cores > 1)
-        mst <- findMaximumTauTree2(g, mode = type)
+        g <- buildNextGraph2(VineTree,
+                             weights = NA,
+                             struct.crit = struct.crit,
+                             parallel = cores > 1)
+        mst <- findMaxTree2(g, mode = type)
         est <- est.TreeCopulas2(mst,
                                 k = k,
                                 d2 = d,
                                 data = data,
                                 oldVineGraph = VineTree,
                                 method = method,
+                                mult = mult,
                                 info = info,
                                 test.level = test.level,
                                 renorm.iter = renorm.iter,
@@ -132,8 +137,8 @@ structure_select2 <- function(data, type, method, struct.crit, test.level, trunc
     res
 }
 
-est.FirstTreeCopulas2 <- function(mst, data.univ, method, test.level, renorm.iter,
-                                  info, parallel) {
+est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
+                                  renorm.iter, info, parallel) {
     d <- nrow(mst$E$nums)
 
     ## estimation
@@ -189,6 +194,7 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, test.level, renorm.ite
         } else {
             pcfit <- kdecop(s,
                             method = method,
+                            mult = mult,
                             renorm.iter = renorm.iter,
                             info = info)
             # pcfit$udata <- NULL
@@ -242,7 +248,7 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, test.level, renorm.ite
 
 
 
-est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, info,
+est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
                              test.level, renorm.iter, weights = NA, parallel,
                              truncate) {
 
@@ -325,7 +331,7 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, info,
             class(pcfit) <- c("kdecopula", "indep.copula")
         } else {
             pcfit <- kdecop(samples,
-                            mult = 1,
+                            mult = mult,
                             method = method,
                             renorm.iter = renorm.iter,
                             info = info)
@@ -378,7 +384,7 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, info,
     list(tree = mst, est = res.k)
 }
 
-initializeFirstGraph2 <- function(data.univ, weights) {
+initializeFirstGraph2 <- function(data.univ, weights, struct.crit = "tau") {
 
     # C = cor(data.univ,method='kendall')
     q <- dim(data.univ)[2]
@@ -386,13 +392,20 @@ initializeFirstGraph2 <- function(data.univ, weights) {
 
     for (i in 1:(q - 1)) {
         for (j in (i + 1):q) {
-            crit <- fasttau(data.univ[, i],
-                            data.univ[, j],
-                            weights)
+            if (struct.crit == "tau") {
+                crit <- fasttau(data.univ[, i],
+                                data.univ[, j],
+                                weights)
+            } else if (struct.crit == "AIC") {
+                crit <- kdecop(data.univ[, c(i, j)], info = TRUE)$info$AIC
+            } else if (struct.crit == "cAIC") {
+                crit <- kdecop(data.univ[, c(i, j)], info = TRUE)$info$cAIC
+            }
             C[i, j] <- crit
             C[j, i] <- crit
         }
     }
+    rownames(C) <- colnames(C) <- colnames(data.univ)
     rownames(C) <- colnames(C) <- colnames(data.univ)
 
     graphFromTauMatrix(C)
@@ -425,8 +438,7 @@ graphFromTauMatrix2 <- function(tau) {
 
 
 ## initialize graph for next vine tree (possible edges)
-buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
-
+buildNextGraph2 <- function(oldVineGraph, weights = NA, struct.crit = "tau", parallel) {
     d <- nrow(oldVineGraph$E$nums)
 
     ## initialize with full graph
@@ -439,19 +451,21 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
     if (parallel) {
         i <- NULL  # dummy for CRAN check
         out <- foreach(i = 1:nrow(g$E$nums)) %dopar% getEdgeInfo2(i,
-                                                                  g,
-                                                                  oldVineGraph,
-                                                                  weights)
+                                                                  g = g,
+                                                                  oldVineGraph = oldVineGraph,
+                                                                  weights = weights,
+                                                                  struct.crit = struct.crit)
     } else {
         out <- lapply(1:nrow(g$E$nums),
                       getEdgeInfo2,
                       g = g,
                       oldVineGraph = oldVineGraph,
-                      weights = weights)
+                      weights = weights,
+                      struct.crit = struct.crit)
     }
 
     ## annotate graph (same order as in old version of this function)
-    g$E$weights         <- sapply(out, function(x) x$tau)
+    g$E$weights         <- sapply(out, function(x) x$w)
     g$E$names           <- sapply(out, function(x) x$name)
     g$E$conditionedSet  <- lapply(out, function(x) x$nedSet)
     g$E$conditioningSet <- lapply(out, function(x) x$ningSet)
@@ -462,7 +476,7 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
+getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
 
     ## get edge
     con <- g$E$nums[i, ]
@@ -481,7 +495,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
     }
 
     ## dummy output
-    tau <- nedSet <- ningSet <- name <- NA
+    w <- nedSet <- ningSet <- name <- NA
     todel <- TRUE
 
     # info if proximity condition is fulfilled ...
@@ -507,7 +521,17 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
 
         ## calculate Kendall's tau
         keine_nas <- !(is.na(zr1a) | is.na(zr2a))
-        tau <- fasttau(zr1a[keine_nas], zr2a[keine_nas], weights)
+        if (struct.crit == "tau") {
+            w <- fasttau(zr1a[keine_nas],
+                                      zr2a[keine_nas],
+                                      weights)
+        } else if (struct.crit == "AIC") {
+            w <- kdecop(cbind(zr1a[keine_nas], zr2a[keine_nas]),
+                                     info = TRUE)$info$AIC
+        } else if (struct.crit == "cAIC") {
+            w <- kdecop(cbind(zr1a[keine_nas], zr2a[keine_nas]),
+                                     info = TRUE)$info$cAIC
+        }
 
         ## get names
         name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
@@ -534,7 +558,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
     }
 
     ## return edge information
-    list(tau = tau,
+    list(w = w,
          nedSet = nedSet,
          ningSet = ningSet,
          name = name,
@@ -584,7 +608,7 @@ makeFullGraph2 <- function(d) {
                   conditioningSet = NULL))
 }
 
-findMaximumTauTree2 <- function(g, mode = "RVine") {
+findMaxTree2 <- function(g, mode = "RVine") {
     ## construct adjency matrix
     A <- adjacencyMatrix(g)
     d <- ncol(A)
@@ -699,8 +723,8 @@ deleteEdges <- function(g) {
 #         stop("'struct.crit = AIC' is not yet available for C-Vines")
 #     }
 # }
-#
-#
+
+
 # findMaxTree <- function(g, mode = "RVine", struct.crit = "tau") {
 #     switch(struct.crit,
 #            "tau"  = findMaximumTauTree(g, mode = mode),

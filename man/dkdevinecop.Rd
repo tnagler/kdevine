@@ -6,7 +6,7 @@
 \alias{rkdevinecop}
 \title{Working with a \code{kdevinecop} object}
 \usage{
-dkdevinecop(u, obj, stable = TRUE)
+dkdevinecop(u, obj, stable = FALSE)
 
 rkdevinecop(n, obj, U = NULL, quasi = FALSE)
 }
