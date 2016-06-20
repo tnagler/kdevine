@@ -4,13 +4,16 @@
 \alias{kdevine}
 \title{High-dimensional kernel density estimation based on vine copulas}
 \usage{
-kdevine(data, mult.1d = 1, ...)
+kdevine(data, mult.1d = 1, copula.type = "kde", ...)
 }
 \arguments{
 \item{data}{(\eqn{n x d}) data matrix.}
 
 \item{mult.1d}{numeric; all bandwidhts for univariate kernel density estimation
 are multiplied with \code{mult.1d}.}
+
+\item{copula.type}{either \code{"kde"} (default) or \code{"parametric"} for
+kernel or parametric estimation of the vine copula.}
 
 \item{...}{further arguments passed to \code{\link{kde1d}} or
 \code{\link{kdevinecop}}.}

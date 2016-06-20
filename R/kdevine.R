@@ -3,6 +3,8 @@
 #' @param data (\eqn{n x d}) data matrix.
 #' @param mult.1d numeric; all bandwidhts for univariate kernel density estimation
 #'  are multiplied with \code{mult.1d}.
+#' @param copula.type either \code{"kde"} (default) or \code{"parametric"} for
+#' kernel or parametric estimation of the vine copula.
 #' @param ... further arguments passed to \code{\link{kde1d}} or
 #'  \code{\link{kdevinecop}}.
 #'
@@ -23,7 +25,7 @@
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
 #' @export
-kdevine <- function(data, mult.1d = 1, ...) {
+kdevine <- function(data, mult.1d = 1, copula.type = "kde", ...) {
     data <- as.matrix(data)
     n <- nrow(data)
     d <- ncol(data)
@@ -38,9 +40,12 @@ kdevine <- function(data, mult.1d = 1, ...) {
             stop("'xmin' has to be of length d")
     }
     if (length(list(...)$bw) != d && !is.null(list(...)$bw))
-        stop("'bw' hast o be of length d")
-    if (is.null((list(...)$copula.type)))
+        stop("'bw' hast to be of length d")
+    if (is.null((list(...)$copula.type))) {
         copula.type <- "kde"
+    } else {
+        copula.type <- list(...)$copula.type
+    }
     if (ncol(data) != d)
         data <- t(data)
     stopifnot(ncol(data) == d)
@@ -146,7 +151,13 @@ dkdevine <- function(x, obj) {
         # PIT to copula level
         for (i in 1:d)
             u[, i] <- pkde1d(x[, i], obj$marg.dens[[i]])
-        vinevals <- dkdevinecop(u, obj = obj$vine, stable = TRUE)
+        if (inherits(obj$vine, "kdevinecop")) {
+            vinevals <- dkdevinecop(u, obj = obj$vine, stable = TRUE)
+        } else if (inherits(obj$vine, "RVineMatrix")) {
+            vinevals <- RVinePDF(u, obj$vine)
+        } else {
+            stop("vine has incompatible type")
+        }
     } else {
         vinevals <- rep(1, nrow(x))
     }

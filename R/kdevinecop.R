@@ -149,13 +149,13 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
     }
 
     ##
-    M = matrix
-    Mold = M
-    o = diag(M)
-    M = reorderRVineMatrix(M)
-    data = data[, o[length(o):1]]
-    MaxMat = createMaxMat(M)
-    CondDistr = neededCondDistr(M)
+    M <- matrix
+    Mold <- M
+    o <- diag(M)
+    M <- reorderRVineMatrix(M)
+    data <- data[, o[length(o):1]]
+    MaxMat <- createMaxMat(M)
+    CondDistr <- neededCondDistr(M)
 
     ## initialize objects
     res <- as.list(numeric(d - 1))

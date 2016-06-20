@@ -31,6 +31,8 @@ independence copula will be set for this pair. If \code{test.level = NA}
 \item{trunc.level}{integer; the truncation level. All pair copulas in trees
 above the truncation level will be set to independence.}
 
+\item{treecrit}{criterion for structure selection; defaults to \code{"tau"}.}
+
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
 within each tree (using \code{\link[foreach]{foreach}}).}
 
