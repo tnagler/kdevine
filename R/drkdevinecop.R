@@ -206,5 +206,5 @@ rkdevinecop <- function(n, obj, U = NULL, quasi = FALSE) {
 
     ## return result in initial ordering of the variables
     out <- t(Vdirect[1, , ])
-    out[, sort(o[length(o):1], index.return = TRUE)$ix]
+    out[, sort(o[length(o):1], index.return = TRUE)$ix, drop = FALSE]
 }
