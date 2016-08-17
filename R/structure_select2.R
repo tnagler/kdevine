@@ -103,7 +103,7 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
                 pcfit <- res[[i]][[k - i]]$c
                 llikv[k, i, ] <- log(pcfit$info$likvalues)
                 llik[k, i] <- pcfit$info$loglik
-                effp[k, i] <- pcfit$info$ffp
+                effp[k, i] <- pcfit$info$effp
                 AIC[k, i] <- -2 * pcfit$info$loglik + 2 * effp[k, i]
                 cAIC[k, i] <-
                     AIC[k, i] + (2 * effp[k, i] * (effp[k, i] + 1)) /
