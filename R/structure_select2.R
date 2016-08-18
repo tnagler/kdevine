@@ -101,14 +101,14 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
             hfit <- res[[i]][[k - i]]$h
             if (info) {
                 pcfit <- res[[i]][[k - i]]$c
-                llikv[k, i, ] <- log(pcfit$likvalues)
-                llik[k, i] <- pcfit$loglik
-                effp[k, i] <- pcfit$effp
-                AIC[k, i] <- -2 * pcfit$loglik + 2 * effp[k, i]
+                llikv[k, i, ] <- log(pcfit$info$likvalues)
+                llik[k, i] <- pcfit$info$loglik
+                effp[k, i] <- pcfit$info$effp
+                AIC[k, i] <- -2 * pcfit$info$loglik + 2 * effp[k, i]
                 cAIC[k, i] <-
                     AIC[k, i] + (2 * effp[k, i] * (effp[k, i] + 1)) /
                     (n - effp[k, i] - 1)
-                BIC[k, i] <- -2 * pcfit$loglik + log(n) * effp[k, i]
+                BIC[k, i] <- -2 * pcfit$info$loglik + log(n) * effp[k, i]
             }
         }
     }
