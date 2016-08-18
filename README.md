@@ -19,7 +19,9 @@ devtools::install_github("tnagler/kdevine")
 References
 ----------
 
-Nagler, T., Czado, C. (2016) 
-Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas
-[*arXiv:1503.03305 [stat.ME]*](http://arxiv.org/abs/1503.03305)
+
+Nagler, T., Czado, C. (2016)  
+Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas  
+Journal of Multivariate Analysis 151, 69-89 ([doi:10.1016/j.jmva.2016.07.003](http://dx.doi.org/10.1016/j.jmva.2016.07.003))  
+[preprint](http://arxiv.org/abs/1503.03305)
 
