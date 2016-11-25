@@ -149,7 +149,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
     }
 
     ##
-    M <- matrix
+    M <- ToLowerTri(matrix)
     Mold <- M
     o <- diag(M)
     M <- reorderRVineMatrix(M)
@@ -172,7 +172,6 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
     V$direct <- array(NA, dim = c(d, d, n))
     V$indirect <- array(NA, dim = c(d, d, n))
     V$direct[d, , ] <- t(data[, d:1])
-
 
     for (k in d:2) {
         doEst <- function(i) {
@@ -375,4 +374,13 @@ neededCondDistr <- function(Vine) {
     }
 
     return(M)
+}
+
+ToLowerTri <- function(x) {
+    ## only change matrix if not already lower triagonal
+    if(all(x[lower.tri(x)] == 0)) {
+        x[nrow(x):1, ncol(x):1]
+    } else {
+        x
+    }
 }
