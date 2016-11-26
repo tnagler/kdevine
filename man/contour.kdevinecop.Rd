@@ -26,7 +26,12 @@ Contour plots of pair copula kernel estimates
 \examples{
 data(wdbc)  # load data
 u <- pobs(wdbc[, 5:7], ties = "average")  # rank-transform to copula data
-fit <- kdevinecop(u)  # estimate density
-contour(fit)  # contour matrix
+\dontshow{wdbc <- wdbc[1:30, ]}
+# estimate density
+fit <- kdevinecop(u)
+
+# contour matrix
+contour(fit)
+
 }
 

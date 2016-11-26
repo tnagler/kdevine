@@ -139,7 +139,7 @@ rkde1d <- function(n, obj, quasi = FALSE) {
 #' @method plot kde1d
 #'
 #' @param x \code{kde1d} object.
-#' @param ev gridpoints for the plot (optional)
+#' @param ev gridpoints for the plot (optional).
 #' @param ... further arguments passed to \code{\link{plot.default}}.
 #'
 #' @seealso

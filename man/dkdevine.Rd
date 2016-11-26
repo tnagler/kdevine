@@ -18,11 +18,14 @@ The density estimate evaluated at \code{x}.
 Evaluate the density of a kdevine object
 }
 \examples{
-data(wdbc)  # load data
-
+# load data
+data(wdbc)
+\dontshow{wdbc <- wdbc[1:30, ]}
 # estimate density (use xmin to indicate positive support)
 fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
-dkdevine(c(1000, 0.1, 0.1), fit)  # evaluate density estimate
+
+# evaluate density estimate
+dkdevine(c(1000, 0.1, 0.1), fit)
 
 }
 \seealso{
