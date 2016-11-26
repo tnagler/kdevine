@@ -11,8 +11,17 @@
 #' @examples
 #' data(wdbc)  # load data
 #' u <- pobs(wdbc[, 5:7], ties = "average")  # rank-transform to copula data
-#' fit <- kdevinecop(u)  # estimate density
-#' contour(fit)  # contour matrix
+#' \dontshow{wdbc <- wdbc[1:30, ]}
+#' # estimate density
+#' fit <- kdevinecop(u)
+#'
+#' # contour matrix
+#' contour(fit)
+#'
+#' @importFrom graphics abline contour par plot.new plot.window polygon
+#' @importFrom graphics strheight strwidth text
+#' @importFrom grDevices col2rgb rgb
+#'
 #' @export
 contour.kdevinecop <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...) {
 
@@ -62,9 +71,9 @@ contour.kdevinecop <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...)
     cnt <- 0
     k <- d
     maxnums <- get_num(1, tree = max(tree), x$matrix)
-    for (i in tree) {
+    for (i in rev(tree)) {
         for (j in 1:(d - min(tree))) {
-            if (d - i >= j) {
+            if (j <= d - i) {
                 name <- split_num(naming(M[c(j, (d - i + 1):d), j]))
                 nums <- lapply(extract_nums(x[[i]]), split_num)
                 match <- sapply(nums, function(x) all(name %in% x))
