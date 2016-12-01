@@ -34,7 +34,6 @@ NumericVector ikern_gauss(const NumericVector x) {
     return out;
 }
 
-
 // [[Rcpp::export]]
 NumericVector eval_kde1d(const NumericVector xsort,
                          const NumericVector xev,
@@ -87,8 +86,6 @@ NumericVector eval_pkde1d(const NumericVector x,
 {
     NumericVector tmp(xev.size());
     NumericVector out(xev.size());
-    NumericVector xeveff(xev.size());
-    NumericVector xevdst(xev.size());
     double n = x.size();
 
     for (int i = 0; i < xev.size(); ++i) {
@@ -101,15 +98,15 @@ NumericVector eval_pkde1d(const NumericVector x,
             tmp = ikern_gauss((xev[i] - x) / bw);
             if (!(xmin != xmin)) {
                 // substract integral up to xmin
-                tmp = tmp - ikern_gauss((xmin - x) / bw);
+                tmp += - ikern_gauss((xmin - x) / bw);
                 // add integrals for reflected data below xmin
-                tmp = tmp + ikern_gauss((2 * xmin - x - xmin) / bw);
+                tmp += ikern_gauss((2 * xmin - x - xmin) / bw);
                 // substract integral up to xmin
-                tmp = tmp - ikern_gauss((2 * xmin - x - xev[i]) / bw);
+                tmp += - ikern_gauss((2 * xmin - x - xev[i]) / bw);
             }
             if (!(xmax != xmax)) {
                 // add integrals for reflected data above xmax
-                tmp = tmp + ikern_gauss(-(2 * xmax - x - xev[i]) / bw);
+                tmp += ikern_gauss(-(2 * xmax - x - xev[i]) / bw);
             }
             out[i] = sum(tmp) / n;
         }

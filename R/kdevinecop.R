@@ -48,8 +48,12 @@
 #' @examples
 #' data(wdbc)  # load data
 #' u <- pobs(wdbc[, 5:7], ties = "average")  # rank-transform to copula data
-#' fit <- kdevinecop(u)  # estimate density
-#' dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
+#' \dontshow{wdbc <- wdbc[1:30, ]}
+#' # estimate density
+#' fit <- kdevinecop(u)
+#'
+#' # evaluate density estimate
+#' dkdevinecop(c(0.1, 0.1, 0.1), fit)
 #'
 #' @importFrom kdecopula kdecop hkdecop
 #' @importFrom VineCopula BiCopIndTest RVineMatrix TauMatrix
