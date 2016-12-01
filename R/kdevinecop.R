@@ -260,14 +260,14 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
 
                 if (info) {
                     cfit <- res.ki$res.ki$c
-                    llikv[k, i, ] <- log(cfit$likvalues)
-                    llik[k, i] <- cfit$loglik
+                    llikv[k, i, ] <- log(cfit$info$likvalues)
+                    llik[k, i] <- cfit$info$loglik
                     effp[k, i] <- cfit$effp
-                    AIC[k, i] <- -2 * cfit$loglik + 2 * effp[k, i]
+                    AIC[k, i] <- -2 * cfit$info$loglik + 2 * effp[k, i]
                     cAIC[k, i] <-
                         AIC[k, i] + (2 * effp[k, i] * (effp[k, i] + 1)) /
                         (n - effp[k, i] - 1)
-                    BIC[k, i] <- -2 * cfit$loglik + log(n) * effp[k, i]
+                    BIC[k, i] <- -2 * cfit$info$loglik + log(n) * effp[k, i]
                 }
             }
         } # end i = 1:(d-1)
