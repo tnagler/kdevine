@@ -177,6 +177,15 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
     V$indirect <- array(NA, dim = c(d, d, n))
     V$direct[d, , ] <- t(data[, d:1])
 
+    ## For independence pair-copulas
+    indepinfo <- list(effp = 0,
+                      likvalues = rep(1, n),
+                      loglik = 0,
+                      effp = 0,
+                      AIC = 0,
+                      cAIC = 0,
+                      BIC = 0)
+
     for (k in d:2) {
         doEst <- function(i) {
             if (k > i) {
@@ -197,15 +206,9 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                     indep <- TRUE
 
                 if (indep) {
-                    cfit <- if (info) {
-                        list(effp = 0,
-                             likvalues = rep(1, n),
-                             loglik = 0,
-                             effp = 0,
-                             AIC = 0,
-                             cAIC = 0,
-                             BIC = 0)
-                    } else list()
+                    cfit <- list()
+                    if (info)
+                        cfit$info <- indepinfo
                     class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
                     cfit <- kdecop(samples,
@@ -262,7 +265,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                     cfit <- res.ki$res.ki$c
                     llikv[k, i, ] <- log(cfit$info$likvalues)
                     llik[k, i] <- cfit$info$loglik
-                    effp[k, i] <- cfit$effp
+                    effp[k, i] <- cfit$info$effp
                     AIC[k, i] <- -2 * cfit$info$loglik + 2 * effp[k, i]
                     cAIC[k, i] <-
                         AIC[k, i] + (2 * effp[k, i] * (effp[k, i] + 1)) /
