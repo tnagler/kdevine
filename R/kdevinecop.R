@@ -206,11 +206,9 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                     indep <- TRUE
 
                 if (indep) {
-                    if (info) {
+                    cfit <- list()
+                    if (info)
                         cfit$info <- indepinfo
-                    } else {
-                        cfit <- list()
-                    }
                     class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
                     cfit <- kdecop(samples,
