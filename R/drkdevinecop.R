@@ -120,7 +120,7 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
 
                     if(CondDistr$indirect[k - 1, i]) {
                         if (any(class(cfit) == "indep.copula")) {
-                            V$direct[k - 1, i, ] <- ev[,1]
+                            V$indirect[k - 1, i, ] <- ev[,1]
                         } else {
                             V$indirect[k - 1, i, ] <- hkdecop(ev,
                                                               obj = cfit,
