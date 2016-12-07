@@ -144,6 +144,15 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
     ## estimation
     pkgs <- c("kdevine", "kdecopula")
 
+    ## For independence pair-copulas
+    indepinfo <- list(effp = 0,
+                      likvalues = rep(1, nrow(data.univ)),
+                      loglik = 0,
+                      effp = 0,
+                      AIC = 0,
+                      cAIC = 0,
+                      BIC = 0)
+
     doEst <- function(i) {
         a <- rev(mst$E$nums[i, ])
 
@@ -181,15 +190,9 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
                         BiCopIndTest(s[, 1], s[, 2])$p.value >= test.level,
                         FALSE)
         if (indep) {
-            pcfit <- if (info) {
-                list(effp = 0,
-                     likvalues = rep(1, nrow(s)),
-                     loglik = 0,
-                     effp = 0 ,
-                     AIC = 0,
-                     cAIC = 0,
-                     BIC = 0)
-            } else list()
+            pcfit <- list()
+            if (info)
+                pcfit$info <- indepinfo
             class(pcfit) <- c("kdecopula", "indep.copula")
         } else {
             pcfit <- kdecop(s,
@@ -201,12 +204,17 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
         }
 
         ## get and store new pseudo-samples
-        Copula.CondData.1 <- list(hkdecop(s,
-                                          obj = pcfit,
-                                          cond.var = 2L))
-        Copula.CondData.2 <- list(hkdecop(s,
-                                          obj = pcfit,
-                                          cond.var = 1L))
+        if (indep == TRUE) {
+            Copula.CondData.1 <- s[,1]
+            Copula.CondData.2 <- s[,2]
+        } else {
+            Copula.CondData.1 <- list(hkdecop(s,
+                                              obj = pcfit,
+                                              cond.var = 2L))
+            Copula.CondData.2 <- list(hkdecop(s,
+                                              obj = pcfit,
+                                              cond.var = 1L))
+        }
 
         ## store estimates
         resi <- list(c = pcfit, name = nums)
@@ -253,6 +261,15 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
                              truncate) {
 
     d <- nrow(mst$E$nums) # number of nodes in the tree
+
+    ## For independence pair-copulas
+    indepinfo <- list(effp = 0,
+                      likvalues = rep(1, nrow(data)),
+                      loglik = 0,
+                      effp = 0,
+                      AIC = 0,
+                      cAIC = 0,
+                      BIC = 0)
 
     ## estimation
     exp <- c("split_name", "split_num", "naming")
@@ -319,15 +336,9 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
         if (truncate)
             indep <- TRUE
         if (indep) {
-            pcfit <- if(info){
-                list(effp = 0,
-                     likvalues = rep(1, nrow(samples)),
-                     loglik = 0,
-                     effp = 0,
-                     AIC = 0,
-                     AICc = 0,
-                     BIC  = 0)
-            } else list()
+            pcfit <- list()
+            if (info)
+                pcfit$info <- indepinfo
             class(pcfit) <- c("kdecopula", "indep.copula")
         } else {
             pcfit <- kdecop(samples,
@@ -345,12 +356,18 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
         nums <- naming(sprintf("%d", numsplt))
 
         ## get and store new pseudo-samples
-        Copula.CondData.1 <- hkdecop(samples,
-                                     obj = pcfit,
-                                     cond.var = 1L)
-        Copula.CondData.2 <- hkdecop(samples,
-                                     obj = pcfit,
-                                     cond.var = 2L)
+        if (indep == TRUE) {
+            Copula.CondData.1 <- samples[,2]
+            Copula.CondData.2 <- samples[,1]
+        } else {
+            Copula.CondData.1 <- hkdecop(samples,
+                                         obj = pcfit,
+                                         cond.var = 1L)
+            Copula.CondData.2 <- hkdecop(samples,
+                                         obj = pcfit,
+                                         cond.var = 2L)
+        }
+
 
         ## store estimates
         resi <- list(c = pcfit, name = nums)
