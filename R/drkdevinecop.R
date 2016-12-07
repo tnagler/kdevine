@@ -99,18 +99,35 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
                     cfit$flip <- TRUE
 
                 ## evaluate density and h-functions
-                val[k-1, i, ] <- dkdecop(ev,
-                                         obj = cfit,
-                                         stable = stable)
+                if (any(class(cfit) == "indep.copula")) {
+                    val[k-1, i, ] <- rep(1, nrow(ev))
+                } else {
+                    val[k-1, i, ] <- dkdecop(ev,
+                                             obj = cfit,
+                                             stable = stable)
+                }
+
                 if (k > 2) {
-                    if(CondDistr$direct[k - 1, i])
-                        V$direct[k - 1, i, ] <- hkdecop(ev,
-                                                        obj = cfit,
-                                                        cond.var = 1L)
-                    if(CondDistr$indirect[k - 1, i])
-                        V$indirect[k - 1, i, ] <- hkdecop(ev,
-                                                          obj = cfit,
-                                                          cond.var = 2L)
+                    if(CondDistr$direct[k - 1, i]) {
+                        if (any(class(cfit) == "indep.copula")) {
+                            V$direct[k - 1, i, ] <- ev[,2]
+                        } else {
+                            V$direct[k - 1, i, ] <- hkdecop(ev,
+                                                            obj = cfit,
+                                                            cond.var = 1L)
+                        }
+                    }
+
+                    if(CondDistr$indirect[k - 1, i]) {
+                        if (any(class(cfit) == "indep.copula")) {
+                            V$direct[k - 1, i, ] <- ev[,1]
+                        } else {
+                            V$indirect[k - 1, i, ] <- hkdecop(ev,
+                                                              obj = cfit,
+                                                              cond.var = 2L)
+                        }
+                    }
+
                 }
             }
         }
