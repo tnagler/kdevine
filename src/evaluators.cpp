@@ -126,6 +126,11 @@ NumericVector eval_qkde1d(const NumericVector x,
     double tol = ::fmax(1e-10 * (x1[0] - x0[0]), 1e-10);
 
     for (int i = 0; i < qev.size(); ++i) {
+        if (::fabs(qev[i]) < 1e-30)
+            out[i] = (xmin != xmin) ? R_NegInf : xmin;
+        if (::fabs(qev[i] - 1) < 1e-30)
+            out[i] = (xmax != xmax) ? R_PosInf : xmin;;
+
         int br = 0;
         x0 = min(x) - 5 * bw;
         x1 = max(x) + 5 * bw;
