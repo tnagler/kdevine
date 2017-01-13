@@ -1,14 +1,5 @@
-language: r
-cache: packages
-
-r:
-  - oldrel
-  - release
-  - devel
-
-warnings_are_errors: false
-
-cran: http://cran.rstudio.com
+language: R
+warnings_are_errors: true
 
 sudo: required
 
@@ -20,6 +11,5 @@ apt_packages:
   - libcurl4-openssl-dev
   - libxml2-dev
 
-r_github_packages:
- - tnagler/VineCopula
- - tnagler/kdecopula
+repos:
+  CRAN: http://cran.rstudio.com
