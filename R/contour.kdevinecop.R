@@ -9,8 +9,8 @@
 #' @param ... arguments passed to \code{\link{contour.kdecopula}}.
 #'
 #' @examples
-#' data(wdbc)  # load data
-#' u <- pobs(wdbc[, 5:7], ties = "average")  # rank-transform to copula data
+#' data(wdbc, package = "kdecopula")                     # load data
+#' u <- VineCopula::pobs(wdbc[, 5:7], ties = "average")  # rank-transform
 #' \dontshow{wdbc <- wdbc[1:30, ]}
 #' # estimate density
 #' fit <- kdevinecop(u)

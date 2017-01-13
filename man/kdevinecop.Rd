@@ -50,20 +50,17 @@ The function estimates a vine copula density using kernel estimators for the
 pair copulas (based on the \link{kdecopula} package).
 }
 \examples{
-data(wdbc)  # load data
-u <- pobs(wdbc[, 5:7], ties = "average")  # rank-transform to copula data
-\dontshow{wdbc <- wdbc[1:30, ]}
-# estimate density
-fit <- kdevinecop(u)
+data(wdbc, package = "kdecopula")                    # load data
+u <- VineCopula::pobs(wdbc[, 5:7], ties = "average") # rank-transform
 
-# evaluate density estimate
-dkdevinecop(c(0.1, 0.1, 0.1), fit)
+fit <- kdevinecop(u)                # estimate density
+dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
 
 }
 \references{
-Nagler, T., Czado, C. (2015) \cr
+Nagler, T., Czado, C. (2016) \cr
 Evading the curse of dimensionality in nonparametric density estimation. \cr
-arXiv:1503.03305v2 [stat.ME]
+Journal of Multivariate Analysis 151, 69-89 (doi:10.1016/j.jmva.2016.07.003)
 
 Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). \cr
 Selecting and estimating regular vine copulae and application to financial

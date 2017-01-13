@@ -1,8 +1,14 @@
-#' High-dimensional kernel density estimation based on vine copulas
+#' Kernel density estimatior based on simplified vine copulas
+#'
+#' Implements the vine-copula based estimator of Nagler and Czado (2016). The
+#' marginal densities are estimated by \code{\link{kde1d}}, the vine copula
+#' density by \code{\link{kdevinecop}}.
 #'
 #' @param data (\eqn{n x d}) data matrix.
-#' @param mult.1d numeric; all bandwidhts for univariate kernel density estimation
-#'  are multiplied with \code{mult.1d}.
+#' @param mult.1d numeric; all bandwidhts for marginal kernel density estimation
+#' are multiplied with \code{mult.1d}.
+#' @param xmin numeric vector of length d; see \code{\link{kde1d}}.
+#' @param xmax numeric vector of length d; see \code{\link{kde1d}}.
 #' @param copula.type either \code{"kde"} (default) or \code{"parametric"} for
 #' kernel or parametric estimation of the vine copula.
 #' @param ... further arguments passed to \code{\link{kde1d}} or
@@ -15,9 +21,15 @@
 #' \code{\link{kde1d}}
 #' \code{\link{kdevinecop}}
 #'
+#' @references
+#' Nagler, T., Czado, C. (2016) \cr
+#' Evading the curse of dimensionality in nonparametric density estimation with
+#' simplified vine copulas. \cr
+#' \emph{Journal of Multivariate Analysis 151, 69-89 (doi:10.1016/j.jmva.2016.07.003)}
+#'
 #' @examples
 #' # load data
-#' data(wdbc)
+#' data(wdbc, package = "kdecopula")
 #' \dontshow{wdbc <- wdbc[1:30, ]}
 #' # estimate density (use xmin to indicate positive support)
 #' fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
@@ -30,18 +42,17 @@
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
 #' @export
-kdevine <- function(data, mult.1d = 1, copula.type = "kde", ...) {
+kdevine <- function(data, mult.1d = 1, xmin = NULL, xmax = NULL, copula.type = "kde", ...) {
     data <- as.matrix(data)
-    n <- nrow(data)
     d <- ncol(data)
 
     ## sanity checks
-    if (!is.null(list(...)$xmin)) {
-        if(length(list(...)$xmin) != d)
+    if (!is.null(xmin)) {
+        if (length(xmin) != d)
             stop("'xmin' has to be of length d")
     }
-    if (!is.null(list(...)$xmax)) {
-        if(length(list(...)$xmax) != d)
+    if (!is.null(xmax)) {
+        if (length(xmax) != d)
             stop("'xmin' has to be of length d")
     }
     if (length(list(...)$bw) != d && !is.null(list(...)$bw))

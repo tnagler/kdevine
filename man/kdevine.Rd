@@ -2,15 +2,20 @@
 % Please edit documentation in R/kdevine.R
 \name{kdevine}
 \alias{kdevine}
-\title{High-dimensional kernel density estimation based on vine copulas}
+\title{Kernel density estimatior based on simplified vine copulas}
 \usage{
-kdevine(data, mult.1d = 1, copula.type = "kde", ...)
+kdevine(data, mult.1d = 1, xmin = NULL, xmax = NULL,
+  copula.type = "kde", ...)
 }
 \arguments{
 \item{data}{(\eqn{n x d}) data matrix.}
 
-\item{mult.1d}{numeric; all bandwidhts for univariate kernel density estimation
+\item{mult.1d}{numeric; all bandwidhts for marginal kernel density estimation
 are multiplied with \code{mult.1d}.}
+
+\item{xmin}{numeric vector of length d; see \code{\link{kde1d}}.}
+
+\item{xmax}{numeric vector of length d; see \code{\link{kde1d}}.}
 
 \item{copula.type}{either \code{"kde"} (default) or \code{"parametric"} for
 kernel or parametric estimation of the vine copula.}
@@ -22,11 +27,13 @@ kernel or parametric estimation of the vine copula.}
 An object of class \code{kdevine}.
 }
 \description{
-High-dimensional kernel density estimation based on vine copulas
+Implements the vine-copula based estimator of Nagler and Czado (2016). The
+marginal densities are estimated by \code{\link{kde1d}}, the vine copula
+density by \code{\link{kdevinecop}}.
 }
 \examples{
 # load data
-data(wdbc)
+data(wdbc, package = "kdecopula")
 \dontshow{wdbc <- wdbc[1:30, ]}
 # estimate density (use xmin to indicate positive support)
 fit <- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
@@ -37,6 +44,12 @@ dkdevine(c(1000, 0.1, 0.1), fit)
 # plot simulated data
 pairs(rkdevine(nrow(wdbc), fit))
 
+}
+\references{
+Nagler, T., Czado, C. (2016) \cr
+Evading the curse of dimensionality in nonparametric density estimation with
+simplified vine copulas. \cr
+\emph{Journal of Multivariate Analysis 151, 69-89 (doi:10.1016/j.jmva.2016.07.003)}
 }
 \seealso{
 \code{\link{dkdevine}}

@@ -1,8 +1,8 @@
 Package: kdevine
 Type: Package
 Title: Multivariate Kernel Density Estimation with Vine Copulas
-Version: 0.2.1
-Date: 2016-05-12
+Version: 0.3.0
+Date: 2017-01-13
 Author: Thomas Nagler
 Authors@R: person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut", "cre"))
 URL: https://github.com/tnagler/kdevine
@@ -11,10 +11,9 @@ Description: Implements a vine copula based kernel density estimator. The
     estimator does not suffer from the curse of dimensionality and is therefore
     well suited for high-dimensional applications.
 License: GPL-3 | file LICENSE
-Depends:
-    kdecopula,
-    VineCopula
 Imports:
+    kdecopula,
+    VineCopula,
     Rcpp,
     qrng,
     doParallel,

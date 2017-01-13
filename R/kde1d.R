@@ -23,9 +23,9 @@
 #' \code{\link{lines.kde1d}}
 #'
 #' @examples
-#' data(wdbc)  # load data
-#' fit <- kde1d(wdbc[, 5])  # estimate density
-#' dkde1d(1000, fit)  # evaluate density estimate
+#' data(wdbc, package = "kdecopula")  # load data
+#' fit <- kde1d(wdbc[, 5])            # estimate density
+#' dkde1d(1000, fit)                  # evaluate density estimate
 #'
 #' @importFrom ks hpi
 #' @export
