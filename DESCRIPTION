@@ -23,8 +23,6 @@ Imports:
     graphics,
     stats,
     utils
-Suggests:
-    rgl
 LazyData: yes
 LinkingTo: Rcpp
 Packaged: 2015-04-26 09:25:54 UTC; n

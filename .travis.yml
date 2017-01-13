@@ -4,7 +4,7 @@ r:
   - release
   - devel
 
-warnings_are_errors: true
+warnings_are_errors: false
 
 sudo: required
 
@@ -16,9 +16,6 @@ apt_packages:
   - libcurl4-openssl-dev
   - libxml2-dev
   - libcgal-dev
-  - libglu1-mesa-dev
-  - libglu1-mesa-dev
-  - libx11-dev
 
 repos:
   CRAN: http://cran.rstudio.com
