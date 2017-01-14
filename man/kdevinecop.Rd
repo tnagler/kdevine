@@ -50,17 +50,25 @@ The function estimates a vine copula density using kernel estimators for the
 pair copulas (based on the \link{kdecopula} package).
 }
 \examples{
-data(wdbc, package = "kdecopula")                    # load data
-u <- VineCopula::pobs(wdbc[, 5:7], ties = "average") # rank-transform
-
-fit <- kdevinecop(u)                # estimate density
-dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
+data(wdbc, package = "kdecopula")
+# rank-transform to copula data (margins are uniform)
+u <- VineCopula::pobs(wdbc[, 5:7], ties = "average")
+\dontshow{u <- u[1:30, ]}
+fit <- kdevinecop(u)                   # estimate density
+dkdevinecop(c(0.1, 0.1, 0.1), fit)     # evaluate density estimate
+contour(fit)                           # contour matrix (Gaussian scale)
+pairs(rkdevinecop(500, fit))           # plot simulated data
 
 }
 \references{
-Nagler, T., Czado, C. (2016) \cr
-Evading the curse of dimensionality in nonparametric density estimation. \cr
-Journal of Multivariate Analysis 151, 69-89 (doi:10.1016/j.jmva.2016.07.003)
+Nagler, T., Czado, C. (2016) \cr Evading the curse of
+dimensionality in nonparametric density estimation with simplified vine
+copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
+(doi:10.1016/j.jmva.2016.07.003)}
+
+Nagler, T., Schellhase, C. and Czado, C. (2017) \cr Nonparametric
+estimation of simplified vine copula models: comparison of methods
+arXiv:1701.00845 [stat.ME]
 
 Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). \cr
 Selecting and estimating regular vine copulae and application to financial
