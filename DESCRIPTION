@@ -3,8 +3,7 @@ Type: Package
 Title: Multivariate Kernel Density Estimation with Vine Copulas
 Version: 0.3.0
 Date: 2017-01-13
-Author: Thomas Nagler
-Authors@R: person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut", "cre"))
+Authors@R: person("Thomas", "Nagler", ,"thomas.nagler@tum.de", c("aut", "cre"))
 URL: https://github.com/tnagler/kdevine
 BugReports: https://github.com/tnagler/kdevine/issues
 Description: Implements a vine copula based kernel density estimator. The
