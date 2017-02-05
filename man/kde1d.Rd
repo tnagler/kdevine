@@ -27,7 +27,8 @@ Univariate kernel density estimation for bounded and unbounded support
 \details{
 If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
-boundary bias.
+boundary bias. Discrete variables are convoluted with the uniform distribution
+(see, Nagler, 2017).
 }
 \examples{
 data(wdbc, package = "kdecopula")  # load data
@@ -43,4 +44,3 @@ dkde1d(1000, fit)                  # evaluate density estimate
 \code{\link{plot.kde1d}} ,
 \code{\link{lines.kde1d}}
 }
-

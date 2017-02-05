@@ -4,6 +4,7 @@
 \alias{dkdevinecop}
 \alias{dkevinecop}
 \alias{rkdevinecop}
+\alias{rkdevinecop}
 \title{Working with a \code{kdevinecop} object}
 \usage{
 dkdevinecop(u, obj, stable = FALSE)
@@ -44,9 +45,6 @@ fit <- kdevinecop(u)                # estimate density
 dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
 
 }
-\author{
-Thomas Nagler
-}
 \references{
 Nagler, T., Czado, C. (2016) \cr
 Evading the curse of dimensionality in nonparametric density estimation. \cr
@@ -62,4 +60,6 @@ Computational Statistics & Data Analysis, 59(0):52--69.
 \code{\link[kdecopula:rkdecop]{rkdecop}},
 \code{\link[qrng:ghalton]{ghalton}}
 }
-
+\author{
+Thomas Nagler
+}

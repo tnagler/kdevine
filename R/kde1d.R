@@ -12,7 +12,8 @@
 #' @details
 #' If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
 #' outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
-#' boundary bias.
+#' boundary bias. Discrete variables are convoluted with the uniform distribution
+#' (see, Nagler, 2017).
 #'
 #' @seealso
 #' \code{\link{dkde1d}},
@@ -28,8 +29,10 @@
 #' dkde1d(1000, fit)                  # evaluate density estimate
 #'
 #' @importFrom ks hpi
+#' @importFrom cctools cont_conv
 #' @export
 kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
+    data <- cctools::cont_conv(data)  # make continuous if discrete
     ## check/complete function call
     if (is.null(xmin))
         xmin <- NaN

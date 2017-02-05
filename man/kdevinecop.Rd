@@ -81,4 +81,3 @@ Computational Statistics & Data Analysis, 59(0):52--69.
 \code{\link[VineCopula:BiCopIndTest]{BiCopIndTest}},
 \code{\link[foreach]{foreach}}
 }
-

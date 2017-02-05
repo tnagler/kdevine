@@ -18,9 +18,6 @@ density estimators in the \link[kdecopula]{kdecopula-package} and let's you
 choose from all its implemented methods. Optionally, the vine copula can be
 estimated parameterically (only the margins are nonparametric).
 }
-\author{
-Thomas Nagler
-}
 \references{
 Nagler, T., Czado, C. (2016) \cr Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
@@ -31,5 +28,7 @@ Nagler, T., Schellhase, C. and Czado, C. (2017) \cr Nonparametric
 estimation of simplified vine copula models: comparison of methods
 arXiv:1701.00845 [stat.ME]
 }
+\author{
+Thomas Nagler
+}
 \keyword{package}
-

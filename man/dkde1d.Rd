@@ -2,10 +2,11 @@
 % Please edit documentation in R/kde1d.R
 \name{dkde1d}
 \alias{dkde1d}
-\alias{pkde1d}
 \alias{pkde1d,}
-\alias{qkde1d}
 \alias{qkde1d,}
+\alias{rkde1d}
+\alias{pkde1d}
+\alias{qkde1d}
 \alias{rkde1d}
 \title{Working with a kde1d object}
 \usage{
@@ -46,4 +47,3 @@ pkde1d(1000, fit)  # evaluate corresponding cdf
 \seealso{
 \code{\link{kde1d}}
 }
-

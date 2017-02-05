@@ -34,4 +34,3 @@ pairs(rkdevine(nrow(wdbc), fit))
 \code{\link{rkdevinecop}},
 \code{\link{rkde1d}}
 }
-

@@ -31,4 +31,3 @@ dkdevine(c(1000, 0.1, 0.1), fit)
 \seealso{
 \code{\link{kdevine}}
 }
-

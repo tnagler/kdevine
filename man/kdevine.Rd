@@ -31,6 +31,10 @@ Implements the vine-copula based estimator of Nagler and Czado (2016). The
 marginal densities are estimated by \code{\link{kde1d}}, the vine copula
 density by \code{\link{kdevinecop}}.
 }
+\details{
+Discrete variables are convoluted with the uniform distribution (see,
+Nagler, 2017).
+}
 \examples{
 # load data
 data(wdbc, package = "kdecopula")
@@ -56,4 +60,3 @@ simplified vine copulas. \cr
 \code{\link{kde1d}}
 \code{\link{kdevinecop}}
 }
-

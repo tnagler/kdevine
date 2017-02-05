@@ -34,4 +34,3 @@ fit <- kdevinecop(u)
 contour(fit)
 
 }
-

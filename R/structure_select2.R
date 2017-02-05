@@ -1,14 +1,14 @@
 structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
                               trunc.level, renorm.iter, cores, info, progress = FALSE) {
     if (type == 0) {
-        type = "RVine"
-    } else if(type == 1) {
-        type = "CVine"
+        type <- "RVine"
+    } else if (type == 1) {
+        type <- "CVine"
     }
     if (type != "RVine" & type != "CVine")
         stop("Vine model not implemented.")
-    n = nrow(data)
-    d = ncol(data)
+    n <- nrow(data)
+    d <- ncol(data)
     if (n < 2)
         stop("Number of observations has to be at least 2.")
     if (d < 2)
@@ -27,7 +27,7 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
     ## initialize objects
     RVine <- list(Tree = NULL, Graph = NULL)
     res <- as.list(numeric(d - 1))
-    for(i in 1:(d - 1))
+    for (i in 1:(d - 1))
         res[[i]] <- as.list(numeric(d - i))
     llikv <- array(0, dim = c(d, d, n))
     llik <- matrix(0, d, d)
@@ -65,7 +65,6 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
     VineTree <- est$mst
     RVine$Tree[[1]] <- VineTree
     RVine$Graph[[1]] <- g
-    oldVineGraph <- VineTree
 
     ## higher trees
     for (k in 2:(d - 1)) {
@@ -189,6 +188,9 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
         indep <- ifelse(test.level < 1,
                         BiCopIndTest(s[, 1], s[, 2])$p.value >= test.level,
                         FALSE)
+        if (is.na(indep))
+            browser()
+
         if (indep) {
             pcfit <- list()
             if (info)
@@ -308,17 +310,10 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
             n2  <- oldVineGraph$E$Copula.CondName.1[[con[2]]]
         }
 
-        if (is.list(zr1)) {
-            zr1a <- as.vector(zr1[[1]])
-            zr2a <- as.vector(zr2[[1]])
-            n1a <- as.vector(n1[[1]])
-            n2a <- as.vector(n2[[1]])
-        } else {
-            zr1a <- zr1
-            zr2a <- zr2
-            n1a <- n1
-            n2a <- n2
-        }
+        zr1a <- if (is.list(zr1)) as.vector(zr1[[1]]) else zr1
+        zr2a <- if (is.list(zr2)) as.vector(zr2[[1]]) else zr2
+        n1a <- if (is.list(n1)) as.vector(n1[[1]]) else n1
+        n2a <- if (is.list(n2)) as.vector(n2[[1]]) else n2
 
         ## store pseudo-samples
         Copula.Data.1 <- zr1a
@@ -333,6 +328,7 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
         indep <- ifelse(test.level < 1,
                         BiCopIndTest(samples[, 1], samples[, 2])$p.value >= test.level,
                         FALSE)
+
         if (truncate)
             indep <- TRUE
         if (indep) {
@@ -463,7 +459,6 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, struct.crit = "tau", par
     g$V$names <- oldVineGraph$E$names
     g$V$conditionedSet <- oldVineGraph$E$conditionedSet
     g$V$conditioningSet <- oldVineGraph$E$conditioningSet
-
     ## get info for all edges
     if (parallel) {
         i <- NULL  # dummy for CRAN check
@@ -528,13 +523,8 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
         } else {
             zr2 <- oldVineGraph$E$Copula.CondData.1[[con[2]]]
         }
-        if (is.list(zr1)) {
-            zr1a <- as.vector(zr1[[1]])
-            zr2a <- as.vector(zr2[[1]])
-        } else {
-            zr1a <- zr1
-            zr2a <- zr2
-        }
+        zr1a <- if (is.list(zr1)) as.vector(zr1[[1]]) else zr1
+        zr2a <- if (is.list(zr2)) as.vector(zr2[[1]]) else zr2
 
         ## calculate Kendall's tau
         keine_nas <- !(is.na(zr1a) | is.na(zr2a))
@@ -750,14 +740,13 @@ deleteEdges <- function(g) {
 # }
 
 fasttau <- function(x, y, weights = NA) {
-    TauMatrix(matrix(c(x, y), length(x), 2))[2, 1]
+    TauMatrix(cbind(x, y))[1, 2]
 }
 
 
 as.RVMKernel2 <- function(RVine) {
 
     n <- length(RVine$Tree) + 1
-    con <- list()
     nam <- RVine$Tree[[1]]$V$names
     nedSets <- list()
 

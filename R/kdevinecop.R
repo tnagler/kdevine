@@ -94,6 +94,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         cores <- 1
 
     data <- as.matrix(data)
+    data <- pobs(data, ties.method = "first")
     matrix <- as.matrix(matrix)
 
     ## sanity checks

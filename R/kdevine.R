@@ -14,6 +14,9 @@
 #' @param ... further arguments passed to \code{\link{kde1d}} or
 #'  \code{\link{kdevinecop}}.
 #'
+#' @details Discrete variables are convoluted with the uniform distribution (see,
+#' Nagler, 2017).
+#'
 #' @return An object of class \code{kdevine}.
 #'
 #' @seealso
@@ -66,6 +69,8 @@ kdevine <- function(data, mult.1d = 1, xmin = NULL, xmax = NULL, copula.type = "
         data <- t(data)
     stopifnot(ncol(data) == d)
 
+    data <- cont_conv(data)  # make continuous if discrete
+
     ## estimation of the marginals
     marg.dens <- as.list(numeric(d))
     for (k in 1:d) {
@@ -84,15 +89,17 @@ kdevine <- function(data, mult.1d = 1, xmin = NULL, xmax = NULL, copula.type = "
 
         if (copula.type == "kde") {
             res$vine  <- suppressWarnings(
-                kdevinecop(u,
-                           matrix      = list(...)$matrix,
-                           method      = list(...)$method,
-                           mult        = list(...)$mult,
-                           info        = list(...)$info,
-                           test.level  = list(...)$test.level,
-                           trunc.level = list(...)$trunc.level,
-                           treecrit    = list(...)$treecrit,
-                           cores       = list(...)$cores)
+                kdevinecop(
+                    u,
+                    matrix      = list(...)$matrix,
+                    method      = list(...)$method,
+                    mult        = list(...)$mult,
+                    info        = list(...)$info,
+                    test.level  = list(...)$test.level,
+                    trunc.level = list(...)$trunc.level,
+                    treecrit    = list(...)$treecrit,
+                    cores       = list(...)$cores
+                )
             )
         } else if (copula.type == "parametric") {
             # get family and matrix if available
