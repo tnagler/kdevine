@@ -1,27 +1,28 @@
 #' Univariate kernel density estimation for bounded and unbounded support
 #'
+#' Discrete variables are convoluted with the uniform distribution (see, Nagler,
+#' 2017). If a variable should be treated as discrete, declare it as
+#' [ordered()].
+#'
 #' @param data vector of length \eqn{n}.
 #' @param xmin lower bound for the support of the density.
 #' @param xmax upper bound for the support of the density.
 #' @param bw bandwidth parameter; has to be a positive number or \code{NULL};
-#' the latter calls an automatic selection routine.
+#'   the latter calls an automatic selection routine.
 #' @param mult numeric; the actual bandwidth used is \eqn{bw*mult}.
 #'
 #' @return An object of class \code{kde1d}.
 #'
-#' @details
-#' If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
-#' outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
-#' boundary bias. Discrete variables are convoluted with the uniform distribution
-#' (see, Nagler, 2017).
+#' @details If \code{xmin} or \code{xmax} are finite, the density estimate will
+#'   be 0 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct
+#'   for boundary bias. Discrete variables are convoluted with the uniform
+#'   distribution (see, Nagler, 2017).
 #'
-#' @seealso
-#' \code{\link{dkde1d}},
-#' \code{\link{pkde1d}},
-#' \code{\link{qkde1d}},
-#' \code{\link{rkde1d}}
-#' \code{\link{plot.kde1d}} ,
-#' \code{\link{lines.kde1d}}
+#' @seealso \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
+#'   \code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
+#'
+#' @references Nagler, T. (2017). \cr Nonparametric estimation of probability
+#' densities when some variables are discrete. \cr Unpublished manuscript
 #'
 #' @examples
 #' data(wdbc, package = "kdecopula")  # load data
@@ -32,7 +33,7 @@
 #' @importFrom cctools cont_conv
 #' @export
 kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
-    data <- cctools::cont_conv(data)  # make continuous if discrete
+    data <- as.numeric(cctools::cont_conv(data))  # make continuous if discrete
     ## check/complete function call
     if (is.null(xmin))
         xmin <- NaN
@@ -48,10 +49,10 @@ kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
         if (any(data < xmin) || any(data > xmax))
             stop("Not all data are contained in the interval [xmin, xmax].")
     } else if (!is.nan(xmin)) {
-        if(any(data < xmin))
+        if (any(data < xmin))
             stop("Not all data are larger than xmin.")
     } else if (!is.nan(xmax)) {
-        if(any(data > xmax))
+        if (any(data > xmax))
             stop("Not all data are samller than xmax")
     }
 
@@ -131,9 +132,8 @@ rkde1d <- function(n, obj, quasi = FALSE) {
     } else {
         U <- ghalton(n, d = 1)
     }
-
     # simulated data from KDE is the quantile transform of U
-    qkde1d(U)
+    qkde1d(U, obj)
 }
 
 #' Plotting kde1d objects

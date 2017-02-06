@@ -22,13 +22,15 @@ the latter calls an automatic selection routine.}
 An object of class \code{kde1d}.
 }
 \description{
-Univariate kernel density estimation for bounded and unbounded support
+Discrete variables are convoluted with the uniform distribution (see, Nagler,
+2017). If a variable should be treated as discrete, declare it as
+[ordered()].
 }
 \details{
-If \code{xmin} or \code{xmax} are finite, the density estimate will be 0
-outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct for
-boundary bias. Discrete variables are convoluted with the uniform distribution
-(see, Nagler, 2017).
+If \code{xmin} or \code{xmax} are finite, the density estimate will
+  be 0 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct
+  for boundary bias. Discrete variables are convoluted with the uniform
+  distribution (see, Nagler, 2017).
 }
 \examples{
 data(wdbc, package = "kdecopula")  # load data
@@ -36,11 +38,11 @@ fit <- kde1d(wdbc[, 5])            # estimate density
 dkde1d(1000, fit)                  # evaluate density estimate
 
 }
+\references{
+Nagler, T. (2017). \cr Nonparametric estimation of probability
+densities when some variables are discrete. \cr Unpublished manuscript
+}
 \seealso{
-\code{\link{dkde1d}},
-\code{\link{pkde1d}},
-\code{\link{qkde1d}},
-\code{\link{rkde1d}}
-\code{\link{plot.kde1d}} ,
-\code{\link{lines.kde1d}}
+\code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
+  \code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
 }
