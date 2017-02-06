@@ -45,7 +45,8 @@
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
 #' @export
-kdevine <- function(data, mult.1d = 1, xmin = NULL, xmax = NULL, copula.type = "kde", ...) {
+kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
+                    xmax = NULL, copula.type = "kde", ...) {
     data <- as.matrix(data)
     d <- ncol(data)
 

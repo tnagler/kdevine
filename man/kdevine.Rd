@@ -4,7 +4,7 @@
 \alias{kdevine}
 \title{Kernel density estimatior based on simplified vine copulas}
 \usage{
-kdevine(data, mult.1d = 1, xmin = NULL, xmax = NULL,
+kdevine(data, mult.1d = log(1 + ncol(data)), xmin = NULL, xmax = NULL,
   copula.type = "kde", ...)
 }
 \arguments{
