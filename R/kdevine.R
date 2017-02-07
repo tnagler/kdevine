@@ -45,7 +45,7 @@
 #' @export
 kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
                     xmax = NULL, copula.type = "kde", ...) {
-    data <- as.matrix(data)
+    stopifnot(NCOL(data) > 1)
     d <- ncol(data)
 
     ## sanity checks
@@ -157,19 +157,23 @@ kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
 #'
 #' @export
 dkdevine <- function(x, obj) {
-    x <- as.matrix(x)
-    n <- length(obj$marg.dens[[1]]$data)
-    if (ncol(x) == 1)
+    stopifnot(class(obj) == "kdevine")
+    if (NCOL(x) == 1)
         x <- t(x)
     d <- ncol(x)
-
-    stopifnot(class(obj) == "kdevine")
     if (length(obj$marg.dens) != d)
         stop("'x' has incorrect dimension")
 
+    # set ordered as numeric
+    if (!is.numeric(x)) {
+        i_ord <- which(sapply(x, function(y) inherits(y, "ordered")))
+        i_fct <- which(sapply(x, function(y) class(y)[1] == "ordered"))
+        for (i in c(i_fct, i_ord))
+            x[, i] <- as.numeric(x[, i])
+    }
     ## evaluate marginals
-    margvals <- u <- x
-    for(i in 1:d){
+    margvals <- u <- matrix(1, nrow(x), d)
+    for (i in 1:d) {
         margvals[, i] <- dkde1d(x[, i], obj$marg.dens[[i]])
     }
 
