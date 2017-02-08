@@ -45,8 +45,9 @@
 #' @export
 kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
                     xmax = NULL, copula.type = "kde", ...) {
-    data <- as.matrix(data)
-    d <- ncol(data)
+    if (NCOL(data) == 1)
+        data <- t(data)
+    d <- NCOL(data)
 
     ## sanity checks
     if (!is.null(xmin)) {
@@ -64,11 +65,9 @@ kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
     } else {
         copula.type <- list(...)$copula.type
     }
-    if (ncol(data) != d)
-        data <- t(data)
-    stopifnot(ncol(data) == d)
 
-    data <- cont_conv(data)  # make continuous if discrete
+    # make continuous if discrete
+    data <- cont_conv(data)
 
     ## estimation of the marginals
     marg.dens <- as.list(numeric(d))
