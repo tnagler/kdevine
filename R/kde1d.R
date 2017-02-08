@@ -33,8 +33,8 @@
 #' @importFrom cctools cont_conv
 #' @export
 kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
-    data <- as.numeric(cctools::cont_conv(data))  # make continuous if discrete
     ## check/complete function call
+    stopifnot(NCOL(data) == 1)
     if (is.null(xmin))
         xmin <- NaN
     if (is.null(xmax))
@@ -56,14 +56,21 @@ kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
             stop("Not all data are samller than xmax")
     }
 
+    ## make continuous if discrete
+    if (is.list(data))
+        data <- data[[1]]
+    levels <- levels(data)
+    data <- cctools::cont_conv(data)  # always returns a data frame
+
     ## bandwidth selection
     if (is.null(bw))
         bw <- NA
     if (is.na(bw))
-        bw <- hpi(data)
+        bw <- hpi(data[, 1])
 
     ## return kde1d object
     res <- list(data = data,
+                levels = levels,
                 xmin = xmin,
                 xmax = xmax,
                 bw   = bw * mult)
@@ -99,21 +106,30 @@ kde1d <- function(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1) {
 #' @import Rcpp
 #' @export
 dkde1d <- function(x, obj) {
-    eval_kde1d(sort(obj$data), x, obj$xmin, obj$xmax, obj$bw)
+    if (!is.null(dim(x)))
+        x <- as.numeric(x[, 1])
+    eval_kde1d(sort(obj$data[, 1]), x, obj$xmin, obj$xmax, obj$bw)
 }
 
 #' @rdname dkde1d
 #' @export
 pkde1d <- function(x, obj) {
-    eval_pkde1d(obj$data, x, obj$xmin, obj$xmax, obj$bw)
+    if (!is.null(dim(x)))
+        x <- x[, 1]
+    if (is.ordered(x))
+        x <- as.numeric(x) + 0.5
+    eval_pkde1d(obj$data[, 1], x, obj$xmin, obj$xmax, obj$bw)
 }
 
 #' @rdname dkde1d
-#' @useDynLib kdevine
 #' @export
 qkde1d <- function(x, obj) {
     stopifnot(all((x >= 0) & (x <= 1)))
-    eval_qkde1d(obj$data, x, obj$xmin, obj$xmax, obj$bw)
+    q <- eval_qkde1d(obj$data[, 1], x, obj$xmin, obj$xmax, obj$bw)
+    if (obj$type == "ordered") {
+        q <- ordered(round(q), obj$levels)
+    }
+    q
 }
 
 #' @param n integer; number of observations.
@@ -197,6 +213,8 @@ lines.kde1d <- function(x, ev = NULL, ...) {
     do.call(lines, modifyList(pars, list(...)))
 }
 
+
+
 #' #' Bandwidth selection for kde1d
 #' #'
 #' #' @param data data vector.
@@ -231,7 +249,9 @@ lines.kde1d <- function(x, ev = NULL, ...) {
 #'                 K <- K + kern_gauss((2 * xmin - sums) / bw) / bw
 #'             if (!is.nan(xmax))
 #'                 K <- K + kern_gauss((2 * xmax - sums) / bw) / bw
-#'             lowr <- if (is.nan(xmin)) min(data) - bw else xmin
+#'             lowr <-    if (is.list(data))
+#'                 data <- data[[1]]
+#'             if (is.nan(xmin)) min(data) - bw else xmin
 #'             upr  <- if (is.nan(xmax)) max(data) + bw else xmax
 #'             integrand <- function(x) eval_kde1d(sort(data), x, xmin, xmax, bw)^2
 #'
@@ -257,3 +277,4 @@ lines.kde1d <- function(x, ev = NULL, ...) {
 #'
 #'     ## return results
 #'     bw
+#' }

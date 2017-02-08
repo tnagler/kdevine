@@ -156,6 +156,10 @@ kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
 #'
 #' @export
 dkdevine <- function(x, obj) {
+    if (is.data.frame(x)) {
+        if (!all(sapply(x, is.numeric)))
+            x <- sapply(x, as.numeric)
+    }
     x <- as.matrix(x)
     n <- length(obj$marg.dens[[1]]$data)
     if (ncol(x) == 1)

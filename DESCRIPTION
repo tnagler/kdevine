@@ -27,3 +27,4 @@ LazyData: yes
 LinkingTo: Rcpp
 Packaged: 2015-04-26 09:25:54 UTC; n
 RoxygenNote: 6.0.0
+Suggests: testthat
