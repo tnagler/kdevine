@@ -6,14 +6,12 @@
 \alias{lines.kde1d}
 \title{Plotting kde1d objects}
 \usage{
-\method{plot}{kde1d}(x, ev = NULL, ...)
+\method{plot}{kde1d}(x, ...)
 
-\method{lines}{kde1d}(x, ev = NULL, ...)
+\method{lines}{kde1d}(x, ...)
 }
 \arguments{
 \item{x}{\code{kde1d} object.}
-
-\item{ev}{gridpoints for the plot (optional).}
 
 \item{...}{further arguments passed to \code{\link{plot.default}}.}
 }
@@ -22,11 +20,11 @@ Plotting kde1d objects
 }
 \examples{
 data(wdbc)  # load data
-fit <- kde1d(wdbc[, 6])  # estimate density
+fit <- kde1d(wdbc[, 7])  # estimate density
 plot(fit)  # plot density estimate
 
-fit2 <- kde1d(wdbc[, 7])  # estimate density for another variable
-lines(fit2, col = 2)  # add second estimate to the plot
+fit2 <- kde1d(as.ordered(wdbc[, 1])) # discrete variable
+plot(fit2, col = 2)
 
 }
 \seealso{

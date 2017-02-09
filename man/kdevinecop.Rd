@@ -22,7 +22,7 @@ if \code{NA} (default) the structure selection heuristic of Dissman et al.
 \item{mult}{see \code{\link[kdecopula:kdecop]{kdecop}}.}
 
 \item{test.level}{significance level for independence test. If you provide a
-number in [0, 1], an independence test
+number in \eqn{[0, 1]}, an independence test
 (\code{\link[VineCopula:BiCopIndTest]{BiCopIndTest}}) will be performed for
 each pair; if the null hypothesis of independence cannot be rejected, the
 independence copula will be set for this pair. If \code{test.level = NA}
@@ -68,7 +68,7 @@ copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
 
 Nagler, T., Schellhase, C. and Czado, C. (2017) \cr Nonparametric
 estimation of simplified vine copula models: comparison of methods
-arXiv:1701.00845 [stat.ME]
+arXiv:1701.00845
 
 Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). \cr
 Selecting and estimating regular vine copulae and application to financial

@@ -4,11 +4,11 @@
 \alias{kdevine}
 \title{Kernel density estimatior based on simplified vine copulas}
 \usage{
-kdevine(data, mult.1d = log(1 + ncol(data)), xmin = NULL, xmax = NULL,
+kdevine(x, mult.1d = log(1 + ncol(x)), xmin = NULL, xmax = NULL,
   copula.type = "kde", ...)
 }
 \arguments{
-\item{data}{(\eqn{n x d}) data matrix.}
+\item{x}{(\eqn{n x d}) data matrix.}
 
 \item{mult.1d}{numeric; all bandwidhts for marginal kernel density estimation
 are multiplied with \code{mult.1d}.}
@@ -31,7 +31,7 @@ Implements the vine-copula based estimator of Nagler and Czado (2016). The
 marginal densities are estimated by \code{\link{kde1d}}, the vine copula
 density by \code{\link{kdevinecop}}. Discrete variables are convoluted with
 the uniform distribution (see, Nagler, 2017). If a variable should be treated
-as discrete, declare it as [ordered()].
+as discrete, declare it as \code{\link[=ordered]{ordered()}}.
 }
 \examples{
 # load data

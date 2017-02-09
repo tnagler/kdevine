@@ -8,7 +8,7 @@
 #' \code{\link{kdevine}} function. It combines a kernel density estimator for
 #' the margins (\code{\link{kde1d}}) and a kernel estimator of the vine copula
 #' density (\code{\link{kdevinecop}}). The package is built on top of the copula
-#' density estimators in the \link[kdecopula]{kdecopula-package} and let's you
+#' density estimators in the [kdecopula::kdecopula-package] and let's you
 #' choose from all its implemented methods. Optionally, the vine copula can be
 #' estimated parameterically (only the margins are nonparametric).
 #'
@@ -27,7 +27,7 @@
 #'
 #' Nagler, T., Schellhase, C. and Czado, C. (2017) \cr Nonparametric
 #' estimation of simplified vine copula models: comparison of methods
-#' arXiv:1701.00845 [stat.ME]
+#' arXiv:1701.00845
 #'
 #' @keywords package
 #'

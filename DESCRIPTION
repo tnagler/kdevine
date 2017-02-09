@@ -11,19 +11,22 @@ Description: Implements a vine copula based kernel density estimator. The
     well suited for high-dimensional applications.
 License: GPL-3 | file LICENSE
 Imports:
+    graphics,
+    stats,
+    utils,
+    MASS,
+    Rcpp,
+    qrng,
+    ks,
     cctools,
     kdecopula,
     VineCopula,
-    Rcpp,
-    qrng,
     doParallel,
     parallel,
-    foreach,
-    ks,
-    graphics,
-    stats,
-    utils
+    foreach
 LazyData: yes
 LinkingTo: Rcpp
 Packaged: 2015-04-26 09:25:54 UTC; n
 RoxygenNote: 6.0.0
+Suggests: testthat
+Roxygen: list(markdown = TRUE)

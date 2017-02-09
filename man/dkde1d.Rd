@@ -12,7 +12,7 @@
 \usage{
 dkde1d(x, obj)
 
-pkde1d(x, obj)
+pkde1d(x, obj, force_cont = FALSE)
 
 qkde1d(x, obj)
 
@@ -22,6 +22,9 @@ rkde1d(n, obj, quasi = FALSE)
 \item{x}{vector of evaluation points.}
 
 \item{obj}{a \code{kde1d} object.}
+
+\item{force_cont}{if \code{TRUE}, the density is treated as continuous (necessary
+for \code{\link[=kdevine]{kdevine()}}).}
 
 \item{n}{integer; number of observations.}
 
@@ -40,8 +43,10 @@ and \code{\link{qkde1d}} respectively.
 \examples{
 data(wdbc)  # load data
 fit <- kde1d(wdbc[, 5])  # estimate density
-dkde1d(1000, fit)  # evaluate density estimate
-pkde1d(1000, fit)  # evaluate corresponding cdf
+dkde1d(1000, fit)        # evaluate density estimate
+pkde1d(1000, fit)        # evaluate corresponding cdf
+qkde1d(0.5, fit)         # quantile function
+hist(rkde1d(100, fit))   # simulate
 
 }
 \seealso{

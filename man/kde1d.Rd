@@ -4,10 +4,10 @@
 \alias{kde1d}
 \title{Univariate kernel density estimation for bounded and unbounded support}
 \usage{
-kde1d(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1)
+kde1d(x, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, ...)
 }
 \arguments{
-\item{data}{vector of length \eqn{n}.}
+\item{x}{vector of length \eqn{n}.}
 
 \item{xmin}{lower bound for the support of the density.}
 
@@ -17,6 +17,8 @@ kde1d(data, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1)
 the latter calls an automatic selection routine.}
 
 \item{mult}{numeric; the actual bandwidth used is \eqn{bw*mult}.}
+
+\item{...}{unused.}
 }
 \value{
 An object of class \code{kde1d}.
@@ -24,13 +26,13 @@ An object of class \code{kde1d}.
 \description{
 Discrete variables are convoluted with the uniform distribution (see, Nagler,
 2017). If a variable should be treated as discrete, declare it as
-[ordered()].
+\code{\link[=ordered]{ordered()}}.
 }
 \details{
 If \code{xmin} or \code{xmax} are finite, the density estimate will
-  be 0 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct
-  for boundary bias. Discrete variables are convoluted with the uniform
-  distribution (see, Nagler, 2017).
+be 0 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct
+for boundary bias. Discrete variables are convoluted with the uniform
+distribution (see, Nagler, 2017).
 }
 \examples{
 data(wdbc, package = "kdecopula")  # load data
@@ -44,5 +46,5 @@ densities when some variables are discrete. \cr Unpublished manuscript
 }
 \seealso{
 \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
-  \code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
+\code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
 }

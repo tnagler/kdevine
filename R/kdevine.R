@@ -6,7 +6,7 @@
 #' the uniform distribution (see, Nagler, 2017). If a variable should be treated
 #' as discrete, declare it as [ordered()].
 #'
-#' @param data (\eqn{n x d}) data matrix.
+#' @param x (\eqn{n x d}) data matrix.
 #' @param mult.1d numeric; all bandwidhts for marginal kernel density estimation
 #'   are multiplied with \code{mult.1d}.
 #' @param xmin numeric vector of length d; see \code{\link{kde1d}}.
@@ -42,49 +42,50 @@
 #' pairs(rkdevine(nrow(wdbc), fit))
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
+#' @importFrom cctools expand_vec
 #' @export
-kdevine <- function(data, mult.1d = log(1 + ncol(data)), xmin = NULL,
+kdevine <- function(x, mult.1d = log(1 + ncol(x)), xmin = NULL,
                     xmax = NULL, copula.type = "kde", ...) {
-    stopifnot(NCOL(data) > 1)
-    d <- ncol(data)
+    if (missing(x) & is.null(list(...)$data))  # for backwards compatibilitiy
+        list(...)$data
+    x_cc <- cont_conv(x)
+    if (NCOL(x_cc) == 1)
+        stop("x must be multivariate or a factor.")
+    d <- ncol(x_cc)
 
     ## sanity checks
     if (!is.null(xmin)) {
-        if (length(xmin) != d)
-            stop("'xmin' has to be of length d")
+        xmin <- cctools::expand_vec(xmin, x)
     }
     if (!is.null(xmax)) {
-        if (length(xmax) != d)
-            stop("'xmin' has to be of length d")
+        xmax <- cctools::expand_vec(xmin, x)
     }
-    if (length(list(...)$bw) != d && !is.null(list(...)$bw))
-        stop("'bw' hast to be of length d")
+    bw <- list(...)$bw
+    if (!is.null(bw)) {
+        bw <- cctools::expand_vec(bw, x)
+    }
     if (is.null((list(...)$copula.type))) {
         copula.type <- "kde"
     } else {
         copula.type <- list(...)$copula.type
     }
-    if (ncol(data) != d)
-        data <- t(data)
-    stopifnot(ncol(data) == d)
 
-    data <- cont_conv(data)  # make continuous if discrete
 
     ## estimation of the marginals
     marg.dens <- as.list(numeric(d))
     for (k in 1:d) {
-        marg.dens[[k]] <- kde1d(data[, k],
-                                xmin = list(...)$xmin[k],
-                                xmax = list(...)$xmax[k],
-                                bw   = list(...)$bw[k],
+        marg.dens[[k]] <- kde1d(x_cc[, k],
+                                xmin = xmin[k],
+                                xmax = xmax[k],
+                                bw   = bw[k],
                                 mult = mult.1d)
     }
-    res <- list(marg.dens = marg.dens)
+    res <- list(x_cc = x_cc, marg.dens = marg.dens)
 
     ## estimation of the R-vine copula (only if d > 1)
     if (d > 1) {
         # transform to copula data
-        u <- sapply(1:d, function(k) pkde1d(data[, k], marg.dens[[k]]))
+        u <- sapply(1:d, function(k) pkde1d(x_cc[, k], marg.dens[[k]]))
 
         if (copula.type == "kde") {
             res$vine  <- suppressWarnings(
@@ -160,24 +161,19 @@ dkdevine <- function(x, obj) {
     stopifnot(class(obj) == "kdevine")
     if (NCOL(x) == 1)
         x <- t(x)
-    d <- ncol(x)
-    if (length(obj$marg.dens) != d)
-        stop("'x' has incorrect dimension")
+    nms <- colnames(x)
+    # must be numeric, factors are expanded
+    x <- expand_as_numeric(x)
+    # variables must be in same order
+    if (!is.null(nms))
+        x <- x[, colnames(obj$x_cc), drop = FALSE]
 
-    # set ordered as numeric
-    if (!is.numeric(x)) {
-        i_ord <- which(sapply(x, function(y) inherits(y, "ordered")))
-        i_fct <- which(sapply(x, function(y) class(y)[1] == "ordered"))
-        for (i in c(i_fct, i_ord))
-            x[, i] <- as.numeric(x[, i])
-    }
     ## evaluate marginals
-    margvals <- u <- matrix(1, nrow(x), d)
-    for (i in 1:d) {
+    d <- ncol(x)
+    margvals <- u <- x
+    for (i in 1:d)
         margvals[, i] <- dkde1d(x[, i], obj$marg.dens[[i]])
-    }
 
-    ## evaluate copula density (if necessary)
     if (!is.null(obj$vine)) {
         # PIT to copula level
         for (i in 1:d)
