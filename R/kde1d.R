@@ -5,11 +5,12 @@
 #' [ordered()].
 #'
 #' @param x vector of length \eqn{n}.
+#' @param mult numeric; the actual bandwidth used is \eqn{bw*mult}.
 #' @param xmin lower bound for the support of the density.
 #' @param xmax upper bound for the support of the density.
 #' @param bw bandwidth parameter; has to be a positive number or \code{NULL};
 #'   the latter calls an automatic selection routine.
-#' @param mult numeric; the actual bandwidth used is \eqn{bw*mult}.
+#' @param bw_min minimum value for the bandwidth.
 #' @param ... unused.
 #'
 #' @return An object of class \code{kde1d}.
@@ -135,23 +136,32 @@ dkde1d <- function(x, obj) {
     if (!is.ordered(x))
         stopifnot(!is.factor(x))
     x <- cctools::expand_as_numeric(x)
-    eval_kde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
+    f <- eval_kde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
+    if (length(attr(obj$x_cc, "i_disc") == 1)) {
+        # for discrete variables we can normalize
+        x_all_num <- expand_as_numeric(as.ordered(obj$levels))
+        f_all <- eval_kde1d(sort(obj$x_cc), x_all_num, obj$xmin, obj$xmax, obj$bw)
+        f <- f / sum(f_all)
+    }
+
+    f
 }
 
 #' @rdname dkde1d
-#' @param force_cont if `TRUE`, the density is treated as continuous (necessary
-#'   for [kdevine()]).
 #' @export
-pkde1d <- function(x, obj, force_cont = FALSE) {
+pkde1d <- function(x, obj) {
     if (is.data.frame(x))
         x <- x[[1]]
     if (!is.ordered(x))
         stopifnot(!is.factor(x))
     x <- cctools::expand_as_numeric(x)
-    p <- eval_pkde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
     if (length(attr(obj$x_cc, "i_disc") == 1)) {
         # for discrete variables we have to add the missing probability mass
-        p <- p + 0.5 * eval_kde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
+        x_all_num <- expand_as_numeric(as.ordered(obj$levels))
+        f_all <- dkde1d(x_all_num, obj)
+        p <- sapply(x, function(y) sum(f_all[x_all_num <= y]))
+    } else {
+        p <- eval_pkde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
     }
 
     p
@@ -172,10 +182,10 @@ qkde1d <- function(x, obj) {
 
         # pdf at all possible values of x
         dd <- eval_kde1d(sort(obj$x_cc), x_all_num, obj$xmin, obj$xmax, obj$bw)
-        pp <- c(0, cumsum(dd[-length(dd)]))
+        pp <- c(cumsum(dd)) / sum(dd)
 
         # generalized inverse
-        q <- x_all_num[vapply(x, function(y) which.min(y >= pp), integer(1))]
+        q <- x_all_num[vapply(x, function(y) which(y <= pp)[1], integer(1))]
         q <- ordered(obj$levels[q], levels = obj$levels)
     }
 

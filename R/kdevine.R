@@ -229,8 +229,9 @@ rkdevine <- function(n, obj) {
                    "kde" = rkdevinecop(n, obj$vine),
                    "parametric" = RVineSim(n, obj$vine))
     # use quantile transformation for marginals
-    sapply(seq_len(ncol(usim)),
-           function(i) qkde1d(usim[, i], obj$marg.dens[[i]]))
+    sapply(seq_len(ncol(usim)), function(i)
+        qkde1d(usim[, i], obj$marg.dens[[i]])
+    )
 }
 
 

@@ -4,10 +4,13 @@
 \alias{kde1d}
 \title{Univariate kernel density estimation for bounded and unbounded support}
 \usage{
-kde1d(x, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, ...)
+kde1d(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0,
+  ...)
 }
 \arguments{
 \item{x}{vector of length \eqn{n}.}
+
+\item{mult}{numeric; the actual bandwidth used is \eqn{bw*mult}.}
 
 \item{xmin}{lower bound for the support of the density.}
 
@@ -16,7 +19,7 @@ kde1d(x, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, ...)
 \item{bw}{bandwidth parameter; has to be a positive number or \code{NULL};
 the latter calls an automatic selection routine.}
 
-\item{mult}{numeric; the actual bandwidth used is \eqn{bw*mult}.}
+\item{bw_min}{minimum value for the bandwidth.}
 
 \item{...}{unused.}
 }

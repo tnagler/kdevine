@@ -111,7 +111,6 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
 
     ## call structure selection routine if no matrix given
     if (any(is.na(matrix)) & d > 2) {
-        message("matrix is NA. Selecting structure...")
         return(structure_select2(data,
                                  type = 0,
                                  method = method,

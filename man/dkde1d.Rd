@@ -12,7 +12,7 @@
 \usage{
 dkde1d(x, obj)
 
-pkde1d(x, obj, force_cont = FALSE)
+pkde1d(x, obj)
 
 qkde1d(x, obj)
 
@@ -22,9 +22,6 @@ rkde1d(n, obj, quasi = FALSE)
 \item{x}{vector of evaluation points.}
 
 \item{obj}{a \code{kde1d} object.}
-
-\item{force_cont}{if \code{TRUE}, the density is treated as continuous (necessary
-for \code{\link[=kdevine]{kdevine()}}).}
 
 \item{n}{integer; number of observations.}
 
