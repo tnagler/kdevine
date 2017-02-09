@@ -72,13 +72,17 @@ kdevine <- function(x, mult.1d = log(1 + ncol(x)), xmin = NULL,
 
 
     ## estimation of the marginals
+    i_disc <- attr(x_cc, "i_disc")
     marg.dens <- as.list(numeric(d))
     for (k in 1:d) {
-        marg.dens[[k]] <- kde1d(x_cc[, k],
-                                xmin = xmin[k],
-                                xmax = xmax[k],
-                                bw   = bw[k],
-                                mult = mult.1d)
+        marg.dens[[k]] <- kde1d(
+            x_cc[, k],
+            xmin = xmin[k],
+            xmax = xmax[k],
+            bw   = bw[k],
+            mult = mult.1d,
+            bw_min = ifelse(k %in% i_disc, 0.5 - attr(x_cc, "theta"), 0)
+        )
     }
     res <- list(x_cc = x_cc, marg.dens = marg.dens)
 

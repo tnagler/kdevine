@@ -34,7 +34,7 @@
 #' @importFrom MASS bandwidth.nrd
 #' @importFrom cctools cont_conv
 #' @export
-kde1d <- function(x, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, ...) {
+kde1d <- function(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0, ...) {
     if (missing(x) & !is.null(list(...)$data))  # for backwards compatibility
         x <- list(...)$data
 
@@ -80,9 +80,13 @@ kde1d <- function(x, xmin = -Inf, xmax = Inf, bw = NULL, mult = 1, ...) {
         if (all(bw == 0))
             bw <- 1
     }
-    # for discrete, bound from below
-    if (length(attr(x_cc, "i_discr")) == 1) {
-        bw <- max(bw, 1 - attr(x_cc, "theta"))
+    # bound from below
+    if (length(attr(x_cc, "i_disc")) == 1) {
+        # for discrete use 1 - theta
+        bw <- max(bw, 0.5 - attr(x_cc, "theta"))
+    } else {
+        # for continuous use bw_min
+        bw <- max(bw, bw_min)
     }
 
     ## return kde1d object
