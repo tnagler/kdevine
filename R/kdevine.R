@@ -175,13 +175,20 @@ dkdevine <- function(x, obj) {
     ## evaluate marginals
     d <- ncol(x)
     margvals <- u <- x
-    for (i in 1:d)
-        margvals[, i] <- dkde1d(x[, i], obj$marg.dens[[i]])
+    for (k in 1:d) {
+        x_k <- x[, k]
+        if (k %in% attr(obj$x_cc, "i_disc")) {
+            # use normalization if discrete
+            attr(x_k, "i_disc") <- 1
+            obj$marg.dens[[k]]$levels <- attr(obj$x_cc, "levels")[[k]]
+        }
+        margvals[, k] <- dkde1d(x_k, obj$marg.dens[[k]])
+    }
 
     if (!is.null(obj$vine)) {
         # PIT to copula level
-        for (i in 1:d)
-            u[, i] <- pkde1d(x[, i], obj$marg.dens[[i]])
+        for (k in 1:d)
+            u[, k] <- pkde1d(x[, k], obj$marg.dens[[k]])
         if (inherits(obj$vine, "kdevinecop")) {
             vinevals <- dkdevinecop(u, obj = obj$vine, stable = TRUE)
         } else if (inherits(obj$vine, "RVineMatrix")) {
