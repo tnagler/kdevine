@@ -7,8 +7,9 @@
 #' as discrete, declare it as [ordered()].
 #'
 #' @param x (\eqn{n x d}) data matrix.
-#' @param mult.1d numeric; all bandwidhts for marginal kernel density estimation
-#'   are multiplied with \code{mult.1d}.
+#' @param mult_1d numeric; all bandwidhts for marginal kernel density estimation
+#'   are multiplied with \code{mult_1d}. Defaults to `log(1 + d)` where `d` is
+#'   the number of variables after applying [cctools::expand_as_numeric()].
 #' @param xmin numeric vector of length d; see \code{\link{kde1d}}.
 #' @param xmax numeric vector of length d; see \code{\link{kde1d}}.
 #' @param copula.type either \code{"kde"} (default) or \code{"parametric"} for
@@ -21,12 +22,11 @@
 #' @seealso \code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}
 #'
 #' @references Nagler, T., Czado, C. (2016) \cr Evading the curse of
-#' dimensionality in nonparametric density estimation with simplified vine
-#' copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
-#' (doi:10.1016/j.jmva.2016.07.003)}
-#' \cr \cr
-#' Nagler, T. (2017). \cr Nonparametric estimation of probability densities when
-#' some variables are discrete. \cr Unpublished manuscript
+#'   dimensionality in nonparametric density estimation with simplified vine
+#'   copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
+#'   (doi:10.1016/j.jmva.2016.07.003)} \cr \cr Nagler, T. (2017). \cr
+#'   Nonparametric estimation of probability densities when some variables are
+#'   discrete. \cr Unpublished manuscript
 #'
 #' @examples
 #' # load data
@@ -44,10 +44,12 @@
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
 #' @importFrom cctools expand_vec
 #' @export
-kdevine <- function(x, mult.1d = log(1 + ncol(x)), xmin = NULL,
+kdevine <- function(x, mult_1d = NULL, xmin = NULL,
                     xmax = NULL, copula.type = "kde", ...) {
-    if (missing(x) & is.null(list(...)$data))  # for backwards compatibilitiy
-        list(...)$data
+    if (missing(x) & !is.null(list(...)$data))  # for backwards compatibilitiy
+        x <- list(...)$data
+    if (!is.null(list(...)$mult.1d))  # for backwards compatibilitiy
+        mult_1d <- list(...)$mult.1d
     x_cc <- cont_conv(x)
     if (NCOL(x_cc) == 1)
         stop("x must be multivariate or a factor.")
@@ -73,6 +75,8 @@ kdevine <- function(x, mult.1d = log(1 + ncol(x)), xmin = NULL,
 
     ## estimation of the marginals
     i_disc <- attr(x_cc, "i_disc")
+    if (is.null(mult_1d))
+        mult_1d <- log(1 + ncol(x_cc))
     marg.dens <- as.list(numeric(d))
     for (k in 1:d) {
         marg.dens[[k]] <- kde1d(
@@ -80,7 +84,7 @@ kdevine <- function(x, mult.1d = log(1 + ncol(x)), xmin = NULL,
             xmin = xmin[k],
             xmax = xmax[k],
             bw   = bw[k],
-            mult = mult.1d,
+            mult = mult_1d,
             bw_min = ifelse(k %in% i_disc, 0.5 - attr(x_cc, "theta"), 0)
         )
     }
@@ -187,8 +191,14 @@ dkdevine <- function(x, obj) {
 
     if (!is.null(obj$vine)) {
         # PIT to copula level
-        for (k in 1:d)
+        for (k in 1:d) {
+            if (k %in% attr(obj$x_cc, "i_disc")) {
+                # use continuous variant for PIT
+                attr(x_k, "i_disc") <- integer(0)
+                obj$marg.dens[[k]]$levels <- NULL
+            }
             u[, k] <- pkde1d(x[, k], obj$marg.dens[[k]])
+        }
         if (inherits(obj$vine, "kdevinecop")) {
             vinevals <- dkdevinecop(u, obj = obj$vine, stable = TRUE)
         } else if (inherits(obj$vine, "RVineMatrix")) {

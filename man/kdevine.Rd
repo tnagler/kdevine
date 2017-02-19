@@ -4,14 +4,15 @@
 \alias{kdevine}
 \title{Kernel density estimatior based on simplified vine copulas}
 \usage{
-kdevine(x, mult.1d = log(1 + ncol(x)), xmin = NULL, xmax = NULL,
+kdevine(x, mult.1d = NULL, xmin = NULL, xmax = NULL,
   copula.type = "kde", ...)
 }
 \arguments{
 \item{x}{(\eqn{n x d}) data matrix.}
 
 \item{mult.1d}{numeric; all bandwidhts for marginal kernel density estimation
-are multiplied with \code{mult.1d}.}
+are multiplied with \code{mult.1d}. Defaults to \code{log(1 + d)} where \code{d} is
+the number of variables after applying \code{\link[cctools:expand_as_numeric]{cctools::expand_as_numeric()}}.}
 
 \item{xmin}{numeric vector of length d; see \code{\link{kde1d}}.}
 
@@ -51,10 +52,9 @@ pairs(rkdevine(nrow(wdbc), fit))
 Nagler, T., Czado, C. (2016) \cr Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
 copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
-(doi:10.1016/j.jmva.2016.07.003)}
-\cr \cr
-Nagler, T. (2017). \cr Nonparametric estimation of probability densities when
-some variables are discrete. \cr Unpublished manuscript
+(doi:10.1016/j.jmva.2016.07.003)} \cr \cr Nagler, T. (2017). \cr
+Nonparametric estimation of probability densities when some variables are
+discrete. \cr Unpublished manuscript
 }
 \seealso{
 \code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}
