@@ -23,8 +23,8 @@
 #' @seealso \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
 #'   \code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
 #'
-#' @references Nagler, T. (2017). \cr Nonparametric estimation of probability
-#' densities when some variables are discrete. \cr Unpublished manuscript
+#' @references Nagler, T. (2017). *Nonparametric density estimation with
+#'   discrete variables.* Unpublished manuscript.
 #'
 #' @examples
 #' data(wdbc, package = "kdecopula")  # load data

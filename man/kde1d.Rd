@@ -44,8 +44,8 @@ dkde1d(1000, fit)                  # evaluate density estimate
 
 }
 \references{
-Nagler, T. (2017). \cr Nonparametric estimation of probability
-densities when some variables are discrete. \cr Unpublished manuscript
+Nagler, T. (2017). \emph{Nonparametric density estimation with
+discrete variables.} Unpublished manuscript.
 }
 \seealso{
 \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
