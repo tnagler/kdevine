@@ -44,8 +44,8 @@ dkde1d(1000, fit)                  # evaluate density estimate
 
 }
 \references{
-Nagler, T. (2017). \emph{Nonparametric density estimation with
-discrete variables.} Unpublished manuscript.
+Nagler, T. (2017). \emph{A generic approach to nonparametric function
+estimation with mixed data.} Unpublished manuscript.
 }
 \seealso{
 \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},

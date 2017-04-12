@@ -1,8 +1,8 @@
 Package: kdevine
 Type: Package
 Title: Multivariate Kernel Density Estimation with Vine Copulas
-Version: 0.3.1.9000
-Date: 2017-01-13
+Version: 0.4.0
+Date: 2017-04-12
 Authors@R: person("Thomas", "Nagler", ,"thomas.nagler@tum.de", c("aut", "cre"))
 URL: https://github.com/tnagler/kdevine
 BugReports: https://github.com/tnagler/kdevine/issues
@@ -19,14 +19,13 @@ Imports:
     qrng,
     ks,
     cctools,
-    kdecopula,
+    kdecopula (>= 0.8.1),
     VineCopula,
     doParallel,
     parallel,
     foreach
 LazyData: yes
 LinkingTo: Rcpp
-Packaged: 2015-04-26 09:25:54 UTC; n
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
 Suggests: testthat
 Roxygen: list(markdown = TRUE)

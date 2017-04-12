@@ -1,11 +1,12 @@
+
 kdevine
 =======
 
 > Multivariate kernel density estimation with vine copulas
 
-[![Build status Linux](https://travis-ci.org/tnagler/kdevine.svg?branch=master)](https://travis-ci.org/tnagler/kdevine) [![Build status Windows](https://ci.appveyor.com/api/projects/status/epfs987wspjqkwlk?svg=true)](https://ci.appveyor.com/project/tnagler/kdevine) [![CRAN version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/kdevine)](https://cran.r-project.org/package=kdevine)
+[![Build status Linux](https://travis-ci.org/tnagler/kdevine.svg?branch=master)](https://travis-ci.org/tnagler/kdevine) [![Build status Windows](https://ci.appveyor.com/api/projects/status/epfs987wspjqkwlk/branch/master?svg=true)](https://ci.appveyor.com/project/tnagler/kdevine) [![CRAN version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/kdevine)](https://cran.r-project.org/package=kdevine)
 
-This package implements a vine copula based kernel density estimator. The estimator does not suffer from the curse of dimensionality and is therefore well suited for high-dimensional applications (see, Nagler and Czado, 2016). The package is built on top of the copula density estiamtors in [kdecopula](https://github.com/tnagler/kdecopula) and let's you choose from all its implemented methods.
+This package implements a vine copula based kernel density estimator. The estimator does not suffer from the curse of dimensionality and is therefore well suited for high-dimensional applications (see, Nagler and Czado, 2016). The package is built on top of the copula density estimators in [kdecopula](https://github.com/tnagler/kdecopula) and let's you choose from all its implemented methods. The package can handle discrete and categorical data via [continuous convolution](https://github.com/tnagler/cctools).
 
 -   [How to install](#how-to-install)
 -   [Functionality](#functionality)

@@ -19,14 +19,19 @@ choose from all its implemented methods. Optionally, the vine copula can be
 estimated parameterically (only the margins are nonparametric).
 }
 \references{
-Nagler, T., Czado, C. (2016) \cr Evading the curse of
+Nagler, T., Czado, C. (2016) \cr \emph{Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
-copulas. \cr \emph{Journal of Multivariate Analysis 151, 69-89
-(doi:10.1016/j.jmva.2016.07.003)}
+copulas.} \cr \emph{Journal of Multivariate Analysis 151, 69-89
+(doi:10.1016/j.jmva.2016.07.003)} \cr
 
-Nagler, T., Schellhase, C. and Czado, C. (2017) \cr Nonparametric
-estimation of simplified vine copula models: comparison of methods
+Nagler, T., Schellhase, C. and Czado, C. (2017) \cr \emph{Nonparametric
+estimation of simplified vine copula models: comparison of methods}
 arXiv:1701.00845
+
+Nagler, T. (2017) \cr
+\emph{A generic approach to nonparametric function
+estimation with mixed data.} \cr
+Unpublished manuscript.
 }
 \author{
 Thomas Nagler

@@ -54,8 +54,8 @@ Nagler, T., Czado, C. (2016) \emph{Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
 copulas.} Journal of Multivariate Analysis 151, 69-89
 (doi:10.1016/j.jmva.2016.07.003) \cr \cr
-Nagler, T. (2017). \emph{Nonparametric density estimation with
-discrete variables.} Unpublished manuscript.
+Nagler, T. (2017). \emph{A generic approach to nonparametric function
+estimation with mixed data.} Unpublished manuscript.
 }
 \seealso{
 \code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}
