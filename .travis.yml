@@ -18,7 +18,7 @@ apt_packages:
   - libcurl4-openssl-dev
   - libxml2-dev
   - libcgal-dev
-  - r-cran-kdevine
+  - r-cran-vinecopula
   - r-cran-covr
   - r-cran-testthat
 
