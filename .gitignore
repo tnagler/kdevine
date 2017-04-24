@@ -1,6 +1,5 @@
 # History files
 .Rhistory
-
 # Example code in package build process
 *-Ex.R
 # R data files from past sessions
@@ -12,3 +11,4 @@ src/kdevine.dll
 *.o
 *.so
 *.dll
+.directory
