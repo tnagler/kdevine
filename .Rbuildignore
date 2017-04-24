@@ -6,3 +6,4 @@
 ^.*\.html$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^docs$

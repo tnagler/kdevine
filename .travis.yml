@@ -16,6 +16,16 @@ apt_packages:
   - libcurl4-openssl-dev
   - libxml2-dev
   - libcgal-dev
+  - r-cran-kdevine
+  - r-cran-covr
+  - r-cran-testthat
+
+r_github_packages:
+  - tnagler/cctools
+
+before_install:
+  - sudo add-apt-repository ppa:marutter/c2d4u -y
+  - sudo apt-get update -q
 
 repos:
   CRAN: http://cran.rstudio.com
