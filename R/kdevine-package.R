@@ -15,7 +15,7 @@
 #' @name kdevine-package
 #' @aliases kdevine-package
 #' @docType package
-#' @useDynLib kdevine
+#' @useDynLib kdevine, .registration = TRUE
 #'
 #' @author Thomas Nagler
 #'
