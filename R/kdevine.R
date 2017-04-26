@@ -27,7 +27,8 @@
 #'   copulas.* Journal of Multivariate Analysis 151, 69-89
 #'   (doi:10.1016/j.jmva.2016.07.003) \cr \cr
 #'   Nagler, T. (2017). *A generic approach to nonparametric function
-#'   estimation with mixed data.* Unpublished manuscript.
+#'   estimation with mixed data.* [arXiv:1704.07457](https://arxiv.org/abs/1704.07457)
+
 #'
 #' @examples
 #' # load data

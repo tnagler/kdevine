@@ -24,7 +24,7 @@
 #'   \code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
 #'
 #' @references Nagler, T. (2017). *A generic approach to nonparametric function
-#'   estimation with mixed data.* Unpublished manuscript.
+#'   estimation with mixed data.* [arXiv:1704.07457](https://arxiv.org/abs/1704.07457)
 #'
 #' @examples
 #' data(wdbc, package = "kdecopula")  # load data

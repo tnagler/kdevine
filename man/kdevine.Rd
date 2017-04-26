@@ -55,7 +55,7 @@ dimensionality in nonparametric density estimation with simplified vine
 copulas.} Journal of Multivariate Analysis 151, 69-89
 (doi:10.1016/j.jmva.2016.07.003) \cr \cr
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} Unpublished manuscript.
+estimation with mixed data.} \href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
 }
 \seealso{
 \code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}

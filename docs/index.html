@@ -9,7 +9,7 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -80,7 +80,8 @@
 </li>
 <li>
 <p>the latest development version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"tnagler/kdevine"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"tnagler/cctools"</span>) <span class="co"># not on CRAN yet</span>
+devtools::<span class="kw">install_github</span>(<span class="st">"tnagler/kdevine"</span>)</code></pre></div>
 </li>
 </ul>
 </div>
@@ -92,24 +93,24 @@
 <li>
 <p>Class <code>kdevine</code> and its methods:</p>
 <ul>
-<li><p><code>kdevine</code>: Multivariate kernel density estimation based on vine copulas. Implements the estimator of (see, Nagler and Czado, 2016).</p></li>
-<li><p><code>dkdevine</code>, <code>rkdevine</code>: Density and simulation functions.</p></li>
+<li><p><code><a href="reference/kdevine.html">kdevine()</a></code>: Multivariate kernel density estimation based on vine copulas. Implements the estimator of (see, Nagler and Czado, 2016).</p></li>
+<li><p><code><a href="reference/dkdevine.html">dkdevine()</a></code>, <code><a href="reference/rkdevine.html">rkdevine()</a></code>: Density and simulation functions.</p></li>
 </ul>
 </li>
 <li>
 <p>Class <code>kdevinecop</code> and its methods:</p>
 <ul>
-<li><p><code>kdevinecop</code>: Kernel estimator for the vine copula density (see, Nagler and Czado, 2016).</p></li>
-<li><p><code>dkdevinecop</code>, <code>rkdevinecop</code>: Density and simulation functions.</p></li>
-<li><p><code>contour</code>: Matrix of contour plots of all pair-copulas.</p></li>
+<li><p><code><a href="reference/kdevinecop.html">kdevinecop()</a></code>: Kernel estimator for the vine copula density (see, Nagler and Czado, 2016).</p></li>
+<li><p><code><a href="reference/dkdevinecop.html">dkdevinecop()</a></code>, <code><a href="reference/dkdevinecop.html">rkdevinecop()</a></code>: Density and simulation functions.</p></li>
+<li><p><code><a href="reference/contour.kdevinecop.html">contour.kdevinecop()</a></code>: Matrix of contour plots of all pair-copulas.</p></li>
 </ul>
 </li>
 <li>
 <p>Class <code>kde1d</code> and its methods:</p>
 <ul>
-<li><p><code>kde1d</code>: Univariate kernel density estimation for bounded and unbounded support.</p></li>
-<li><p><code>dke1d</code>, <code>pkde1d</code>, <code>rkde1d</code>: Density, cdf, and simulation functions.</p></li>
-<li><p><code>plot</code>, <code>lines</code>: Plots the estimated density.</p></li>
+<li><p><code><a href="reference/kde1d.html">kde1d()</a></code>: Univariate kernel density estimation for bounded and unbounded support.</p></li>
+<li><p><code>dke1d()</code>, <code><a href="reference/dkde1d.html">pkde1d()</a></code>, <code><a href="reference/dkde1d.html">rkde1d()</a></code>: Density, cdf, and simulation functions.</p></li>
+<li><p><code><a href="reference/plot.kde1d.html">plot.kde1d()</a></code>, <code><a href="reference/plot.kde1d.html">lines.kde1d()</a></code>: Plots the estimated density.</p></li>
 </ul>
 </li>
 </ul>
@@ -119,9 +120,11 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Nagler, T., Czado, C. (2016)<br>
-Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas<br><em>Journal of Multivariate Analysis 151, 69-89</em> (<a href="http://dx.doi.org/10.1016/j.jmva.2016.07.003">doi:10.1016/j.jmva.2016.07.003</a>)<br><a href="http://arxiv.org/abs/1503.03305">preprint</a></p>
+Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas<br><em>Journal of Multivariate Analysis 151, 69-89</em> (<a href="http://dx.doi.org/10.1016/j.jmva.2016.07.003">doi:10.1016/j.jmva.2016.07.003</a>, <a href="http://arxiv.org/abs/1503.03305">preprint</a>)</p>
 <p>Nagler, T., Schellhase, C. and Czado, C. (2017)<br>
-Nonparametric estimation of simplified vine copula models: comparison of methods<br><a href="http://arxiv.org/abs/1701.00845">preprint</a></p>
+Nonparametric estimation of simplified vine copula models: comparison of methods<br><a href="http://arxiv.org/abs/1701.00845">arXiv:1701.00845</a></p>
+<p>Nagler, T. (2017)<br>
+A generic approach to nonparametric function estimation with mixed data<br><a href="https://arxiv.org/abs/1704.07457">arXiv:1704.07457</a></p>
 </div>
 </div>
 </div>

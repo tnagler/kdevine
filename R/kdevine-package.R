@@ -32,7 +32,7 @@
 #' Nagler, T. (2017) \cr
 #' *A generic approach to nonparametric function
 #' estimation with mixed data.* \cr
-#' Unpublished manuscript.
+#' [arXiv:1704.07457](https://arxiv.org/abs/1704.07457)
 #'
 #' @keywords package
 #'

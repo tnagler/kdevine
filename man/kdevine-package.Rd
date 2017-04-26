@@ -31,7 +31,7 @@ arXiv:1701.00845
 Nagler, T. (2017) \cr
 \emph{A generic approach to nonparametric function
 estimation with mixed data.} \cr
-Unpublished manuscript.
+\href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
 }
 \author{
 Thomas Nagler

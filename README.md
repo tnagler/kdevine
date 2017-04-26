@@ -26,6 +26,7 @@ You can install:
 -   the latest development version:
 
     ``` r
+    devtools::install_github("tnagler/cctools") # not on CRAN yet
     devtools::install_github("tnagler/kdevine")
     ```
 
@@ -36,25 +37,25 @@ A detailed description of of all functions and options can be found in the [API 
 
 -   Class `kdevine` and its methods:
 
-    -   `kdevine`: Multivariate kernel density estimation based on vine copulas. Implements the estimator of (see, Nagler and Czado, 2016).
+    -   `kdevine()`: Multivariate kernel density estimation based on vine copulas. Implements the estimator of (see, Nagler and Czado, 2016).
 
-    -   `dkdevine`, `rkdevine`: Density and simulation functions.
+    -   `dkdevine()`, `rkdevine()`: Density and simulation functions.
 
 -   Class `kdevinecop` and its methods:
 
-    -   `kdevinecop`: Kernel estimator for the vine copula density (see, Nagler and Czado, 2016).
+    -   `kdevinecop()`: Kernel estimator for the vine copula density (see, Nagler and Czado, 2016).
 
-    -   `dkdevinecop`, `rkdevinecop`: Density and simulation functions.
+    -   `dkdevinecop()`, `rkdevinecop()`: Density and simulation functions.
 
-    -   `contour`: Matrix of contour plots of all pair-copulas.
+    -   `contour.kdevinecop()`: Matrix of contour plots of all pair-copulas.
 
 -   Class `kde1d` and its methods:
 
-    -   `kde1d`: Univariate kernel density estimation for bounded and unbounded support.
+    -   `kde1d()`: Univariate kernel density estimation for bounded and unbounded support.
 
-    -   `dke1d`, `pkde1d`, `rkde1d`: Density, cdf, and simulation functions.
+    -   `dke1d()`, `pkde1d()`, `rkde1d()`: Density, cdf, and simulation functions.
 
-    -   `plot`, `lines`: Plots the estimated density.
+    -   `plot.kde1d()`, `lines.kde1d()`: Plots the estimated density.
 
 See the [package documentation](https://cran.r-project.org/web/packages/kdevine/kdevine.pdf) for more details on arguments and options.
 
@@ -63,9 +64,12 @@ References
 
 Nagler, T., Czado, C. (2016)
 Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas
-*Journal of Multivariate Analysis 151, 69-89* ([doi:10.1016/j.jmva.2016.07.003](http://dx.doi.org/10.1016/j.jmva.2016.07.003))
-[preprint](http://arxiv.org/abs/1503.03305)
+*Journal of Multivariate Analysis 151, 69-89* ([doi:10.1016/j.jmva.2016.07.003](http://dx.doi.org/10.1016/j.jmva.2016.07.003), [preprint](http://arxiv.org/abs/1503.03305))
 
 Nagler, T., Schellhase, C. and Czado, C. (2017)
 Nonparametric estimation of simplified vine copula models: comparison of methods
-[preprint](http://arxiv.org/abs/1701.00845)
+[arXiv:1701.00845](http://arxiv.org/abs/1701.00845)
+
+Nagler, T. (2017)
+A generic approach to nonparametric function estimation with mixed data
+[arXiv:1704.07457](https://arxiv.org/abs/1704.07457)

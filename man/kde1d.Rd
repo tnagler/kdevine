@@ -45,7 +45,7 @@ dkde1d(1000, fit)                  # evaluate density estimate
 }
 \references{
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} Unpublished manuscript.
+estimation with mixed data.} \href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
 }
 \seealso{
 \code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
