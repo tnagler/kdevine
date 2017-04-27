@@ -11,6 +11,13 @@ install:
 
 # Adapt as necessary starting from here
 
+environment:
+
+  matrix:
+  - R_VERSION: devel
+    GCC_PATH: mingw_32
+
+
 build_script:
   - travis-tool.sh install_deps
 
