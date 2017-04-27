@@ -6,10 +6,11 @@ Date: 2017-04-27
 Authors@R: person("Thomas", "Nagler", ,"thomas.nagler@tum.de", c("aut", "cre"))
 URL: https://github.com/tnagler/kdevine
 BugReports: https://github.com/tnagler/kdevine/issues
-Description: Implements a vine copula based kernel density estimator. The
-    estimator does not suffer from the curse of dimensionality and is therefore
-    well suited for high-dimensional applications.
-License: GPL-3 | file LICENSE
+Description: Implements the vine copula based kernel density estimator of
+    Nagler and Czado (2016) <doi:10.1016/j.jmva.2016.07.003>. The estimator does
+    not suffer from the curse of dimensionality and is therefore well suited for
+    high-dimensional applications.
+License: GPL-3
 Imports:
     graphics,
     stats,
