@@ -14,7 +14,7 @@ kdevine
 =========
 
 [![Build status Linux](https://travis-ci.org/tnagler/kdevine.svg?branch=master)](https://travis-ci.org/tnagler/kdevine) 
-[![Build status Windows](https://ci.appveyor.com/api/projects/status/epfs987wspjqkwlk/branch/master?svg=true)](https://ci.appveyor.com/project/tnagler/kdevine) [![CRAN version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/kdevine)](https://cran.r-project.org/package=kdevine) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![Build status Windows](https://ci.appveyor.com/api/projects/status/epfs987wspjqkwlk/branch/master?svg=true)](https://ci.appveyor.com/project/tnagler/kdevine) [![CRAN version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 
 This package implements a vine copula based kernel density estimator. The 
@@ -43,7 +43,6 @@ install.packages("kdevine")
 
 * the latest development version:
 ``` r
-devtools::install_github("tnagler/cctools") # not on CRAN yet
 devtools::install_github("tnagler/kdevine")
 ```
 
@@ -78,8 +77,6 @@ In short, the package provides the following functionality:
      
      * `plot.kde1d()`, `lines.kde1d()`: Plots the estimated density.
 
-See the [package documentation](https://cran.r-project.org/web/packages/kdevine/kdevine.pdf) 
-for more details on arguments and options. 
 
 ## References
 

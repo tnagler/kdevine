@@ -18,11 +18,11 @@ apt_packages:
   - libcurl4-openssl-dev
   - libxml2-dev
   - libcgal-dev
+  - r-cran-doparallel
+  - r-cran-ks
+  - r-cran-rcpp
   - r-cran-covr
   - r-cran-testthat
-
-r_github_packages:
-  - tnagler/cctools
 
 before_install:
   - sudo add-apt-repository ppa:marutter/c2d4u -y
