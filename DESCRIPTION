@@ -1,8 +1,8 @@
 Package: kdevine
 Type: Package
 Title: Multivariate Kernel Density Estimation with Vine Copulas
-Version: 0.4.0
-Date: 2017-04-27
+Version: 0.4.1
+Date: 2017-05-20
 Authors@R: person("Thomas", "Nagler", ,"thomas.nagler@tum.de", c("aut", "cre"))
 URL: https://github.com/tnagler/kdevine
 BugReports: https://github.com/tnagler/kdevine/issues
@@ -18,7 +18,7 @@ Imports:
     MASS,
     Rcpp,
     qrng,
-    ks,
+    KernSmooth,
     cctools,
     kdecopula (>= 0.8.1),
     VineCopula,

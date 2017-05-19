@@ -17,7 +17,7 @@ kde1d(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0,
 \item{xmax}{upper bound for the support of the density.}
 
 \item{bw}{bandwidth parameter; has to be a positive number or \code{NULL};
-the latter calls an automatic selection routine.}
+the latter calls \code{\link[KernSmooth:dpik]{KernSmooth::dpik()}}.}
 
 \item{bw_min}{minimum value for the bandwidth.}
 

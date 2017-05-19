@@ -9,7 +9,7 @@
 #' @param xmin lower bound for the support of the density.
 #' @param xmax upper bound for the support of the density.
 #' @param bw bandwidth parameter; has to be a positive number or \code{NULL};
-#'   the latter calls an automatic selection routine.
+#'   the latter calls [`KernSmooth::dpik()`].
 #' @param bw_min minimum value for the bandwidth.
 #' @param ... unused.
 #'
@@ -31,7 +31,7 @@
 #' fit <- kde1d(wdbc[, 5])            # estimate density
 #' dkde1d(1000, fit)                  # evaluate density estimate
 #'
-#' @importFrom ks hpi
+#' @importFrom KernSmooth dpik
 #' @importFrom MASS bandwidth.nrd
 #' @importFrom cctools cont_conv
 #' @export
@@ -73,7 +73,7 @@ kde1d <- function(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0, .
         bw <- NA
     if (is.na(bw)) {
         # plug in method
-        bw <- try(hpi(x_cc))
+        bw <- try(KernSmooth::dpik(x_cc))
         # if it fails: normal rule of thumb
         if (inherits(bw, "try-error"))
             bw <- MASS::bandwidth.nrd(x_cc)
