@@ -239,13 +239,16 @@ plot.kde1d <- function(x, ...) {
     p.l <- if (is.nan(x$xmin)) min(x$x_cc) - x$bw else x$xmin
     p.u <- if (is.nan(x$xmax)) max(x$x_cc) + x$bw else x$xmax
     ev <- seq(p.l, p.u, l = 100)
-    if (length(attr(x$x_cc, "i_disc") == 1))
+    plot_type <- "l"  # for continuous variables, use a line plot
+    if (length(attr(x$x_cc, "i_disc")) == 1) {
         ev <- as.ordered(x$levels)
-    fhat <- dkde1d(expand_as_numeric(as.ordered(ev)), x)
+        plot_type <- "h"  # for discrete variables, use a histrogram
+    }
+    fhat <- dkde1d(expand_as_numeric(ev), x)
 
     pars <- list(x = ev,
                  y = fhat,
-                 type = "h",
+                 type = plot_type,
                  xlab = "x",
                  ylab = "density",
                  ylim = c(0, 1.1 * max(fhat)))
