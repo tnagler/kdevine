@@ -1,10 +1,6 @@
-## Resubmission
-
-Added reference to "Description" field following a request from Uwe Ligges.
-
 ## Test environments
-* ubuntu 12.04 (devel, release, oldrel) 
-* win-builder (devel, release)
+* ubuntu 14.04 (devel, release) 
+* win-builder (devel)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
