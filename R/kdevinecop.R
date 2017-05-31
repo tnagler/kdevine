@@ -106,8 +106,8 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
         stop("Number of observations has to be at least 2.")
     if (d < 2)
         stop("Dimension has to be at least 2.")
-    if (!(treecrit %in% c("tau", "AIC", "cAIC")))
-        stop("'treecrit' not available; please choose either 'tau', 'AIC' or 'cAIC'")
+    if (!(treecrit %in% c("tau", "AIC", "cAIC", "hoeffd")))
+        stop("'treecrit' not available; please choose either 'tau', 'AIC', 'cAIC', or 'hoeffd'")
 
     ## call structure selection routine if no matrix given
     if (any(is.na(matrix)) & d > 2) {

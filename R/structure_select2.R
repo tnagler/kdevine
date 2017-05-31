@@ -17,8 +17,8 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
         stop("Data has be in the interval [0,1].")
     if (is.na(test.level))
         test.level <- 1
-    if (!(struct.crit %in% c("tau", "AIC", "cAIC")))
-        stop("'struct.crit' has to be one of 'tau', 'AIC', or 'cAIC'")
+    if (!(struct.crit %in% c("tau", "AIC", "cAIC", "hoeffd")))
+        stop("'struct.crit' has to be one of 'tau', 'AIC', 'cAIC', or 'hoeffd'")
 
     # set names if not available
     if (is.null(colnames(data)))
@@ -397,6 +397,16 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
     list(tree = mst, est = res.k)
 }
 
+hoeffd <- function(x) {
+    n <- nrow(x)
+    R <- apply(x,2,rank)-1
+    Q <- sapply(1:n, function(i) sum(x[,1] < x[i,1] & x[,2] < x[i,2]))
+    A <- sum(apply(R*(R-1),1,prod))
+    B <- sum(apply((R-1),1,prod)*Q)
+    C <- sum(Q*(Q-1))
+    return((A - 2*(n-2)*B + (n-2)*(n-3)*C)/(n*(n-1)*(n-2)*(n-3)*(n-4)))
+}
+
 initializeFirstGraph2 <- function(data.univ, weights, struct.crit = "tau") {
 
     # C = cor(data.univ,method='kendall')
@@ -413,6 +423,8 @@ initializeFirstGraph2 <- function(data.univ, weights, struct.crit = "tau") {
                 crit <- kdecop(data.univ[, c(i, j)], info = TRUE)$info$AIC
             } else if (struct.crit == "cAIC") {
                 crit <- kdecop(data.univ[, c(i, j)], info = TRUE)$info$cAIC
+            } else if (struct.crit == "hoeffd") {
+                crit <- abs(hoeffd(data.univ[, c(i, j)]))
             }
             C[i, j] <- crit
             C[j, i] <- crit
@@ -538,6 +550,8 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
         } else if (struct.crit == "cAIC") {
             w <- kdecop(cbind(zr1a[keine_nas], zr2a[keine_nas]),
                                      info = TRUE)$info$cAIC
+        }  else if (struct.crit == "hoeffd") {
+            w <- abs(hoeffd(cbind(zr1a[keine_nas], zr2a[keine_nas])))
         }
 
         ## get names
