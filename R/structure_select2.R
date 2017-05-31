@@ -551,7 +551,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
             w <- kdecop(cbind(zr1a[keine_nas], zr2a[keine_nas]),
                                      info = TRUE)$info$cAIC
         }  else if (struct.crit == "hoeffd") {
-            crit <- abs(hoeffd(cbind(zr1a[keine_nas], zr2a[keine_nas])))
+            w <- abs(hoeffd(cbind(zr1a[keine_nas], zr2a[keine_nas])))
         }
 
         ## get names
