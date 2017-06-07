@@ -62,7 +62,7 @@ kdevine <- function(x, mult_1d = NULL, xmin = NULL,
         xmin <- cctools::expand_vec(xmin, x)
     }
     if (!is.null(xmax)) {
-        xmax <- cctools::expand_vec(xmin, x)
+        xmax <- cctools::expand_vec(xmax, x)
     }
     bw <- list(...)$bw
     if (!is.null(bw)) {
