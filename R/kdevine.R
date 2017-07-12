@@ -68,12 +68,6 @@ kdevine <- function(x, mult_1d = NULL, xmin = NULL,
     if (!is.null(bw)) {
         bw <- cctools::expand_vec(bw, x)
     }
-    if (is.null((list(...)$copula.type))) {
-        copula.type <- "kde"
-    } else {
-        copula.type <- list(...)$copula.type
-    }
-
 
     ## estimation of the marginals
     i_disc <- attr(x_cc, "i_disc")
