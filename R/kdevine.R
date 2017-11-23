@@ -215,6 +215,9 @@ dkdevine <- function(x, obj) {
 #'
 #' @param n number of observations.
 #' @param obj a \code{kdevine} object.
+#' @param quasi logical; the default (\code{FALSE}) returns pseudo-random
+#' numbers, use \code{TRUE} for quasi-random numbers (generalized Halton, only
+#' works for fully nonparametric fits).
 #'
 #' @return An \eqn{n x d} matrix of simulated data from the \code{kdevine}
 #' object.
@@ -236,10 +239,10 @@ dkdevine <- function(x, obj) {
 #'
 #' @importFrom VineCopula pobs RVineSim
 #' @export
-rkdevine <- function(n, obj) {
+rkdevine <- function(n, obj, quasi = FALSE) {
     # simulate from copula
     usim <- switch(obj$copula.type,
-                   "kde" = rkdevinecop(n, obj$vine),
+                   "kde" = rkdevinecop(n, obj$vine, quasi = quasi),
                    "parametric" = RVineSim(n, obj$vine))
     # use quantile transformation for marginals
     sapply(seq_len(ncol(usim)), function(i)
