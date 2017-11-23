@@ -2,22 +2,22 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 kern_gauss <- function(x) {
-    .Call(kdevine_kern_gauss, x)
+    .Call(`_kdevine_kern_gauss`, x)
 }
 
 ikern_gauss <- function(x) {
-    .Call(kdevine_ikern_gauss, x)
+    .Call(`_kdevine_ikern_gauss`, x)
 }
 
 eval_kde1d <- function(xsort, xev, xmin, xmax, bw) {
-    .Call(kdevine_eval_kde1d, xsort, xev, xmin, xmax, bw)
+    .Call(`_kdevine_eval_kde1d`, xsort, xev, xmin, xmax, bw)
 }
 
 eval_pkde1d <- function(x, xev, xmin, xmax, bw) {
-    .Call(kdevine_eval_pkde1d, x, xev, xmin, xmax, bw)
+    .Call(`_kdevine_eval_pkde1d`, x, xev, xmin, xmax, bw)
 }
 
 eval_qkde1d <- function(x, qev, xmin, xmax, bw) {
-    .Call(kdevine_eval_qkde1d, x, qev, xmin, xmax, bw)
+    .Call(`_kdevine_eval_qkde1d`, x, qev, xmin, xmax, bw)
 }
 
