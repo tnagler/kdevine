@@ -2,12 +2,16 @@ dist: trusty
 
 language: R
 r:
+  - oldrel
   - release
   - devel
 
 warnings_are_errors: false
 
 sudo: required
+
+r_packages:
+  - devtools
 
 apt_packages:
   - libgsl0-dev
