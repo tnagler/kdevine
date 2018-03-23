@@ -1,3 +1,15 @@
+kdevine 0.4.2
+---------
+
+DEPENDENCIES
+
+   * Removed dependency to `KernSmooth` and `MASS` packages.
+   * Added dependency to `kde1d` package
+
+FEATURES
+
+   * `kdevine::kde1d()` is deprecated, use `kde1d::kde1()` instead.
+
 kdevine 0.4.1
 ---------
 
