@@ -15,16 +15,15 @@ Imports:
     graphics,
     stats,
     utils,
-    MASS,
     Rcpp,
     qrng,
-    KernSmooth,
     cctools,
     kdecopula (>= 0.8.1),
     VineCopula,
     doParallel,
     parallel,
-    foreach
+    foreach,
+    kde1d
 LazyData: yes
 LinkingTo: Rcpp
 RoxygenNote: 6.0.1

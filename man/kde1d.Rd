@@ -2,52 +2,41 @@
 % Please edit documentation in R/kde1d.R
 \name{kde1d}
 \alias{kde1d}
+\alias{pkde1d}
+\alias{qkde1d}
+\alias{rkde1d}
 \title{Univariate kernel density estimation for bounded and unbounded support}
 \usage{
 kde1d(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0,
   ...)
+
+pkde1d(x, obj)
+
+qkde1d(x, obj)
+
+rkde1d(n, obj, quasi = FALSE)
 }
 \arguments{
-\item{x}{vector of length \eqn{n}.}
+\item{x}{vdeprecated.}
 
-\item{mult}{numeric; the actual bandwidth used is \eqn{bw*mult}.}
+\item{mult}{deprecated.}
 
-\item{xmin}{lower bound for the support of the density.}
+\item{xmin}{deprecated.}
 
-\item{xmax}{upper bound for the support of the density.}
+\item{xmax}{deprecated..}
 
-\item{bw}{bandwidth parameter; has to be a positive number or \code{NULL};
-the latter calls \code{\link[KernSmooth:dpik]{KernSmooth::dpik()}}.}
+\item{bw}{deprecated.}
 
-\item{bw_min}{minimum value for the bandwidth.}
+\item{bw_min}{deprecated.}
 
-\item{...}{unused.}
-}
-\value{
-An object of class \code{kde1d}.
+\item{...}{deprecated.}
+
+\item{obj}{deprecated.}
+
+\item{n}{deprecated.}
+
+\item{quasi}{deprecated.}
 }
 \description{
-Discrete variables are convoluted with the uniform distribution (see, Nagler,
-2017). If a variable should be treated as discrete, declare it as
-\code{\link[=ordered]{ordered()}}.
-}
-\details{
-If \code{xmin} or \code{xmax} are finite, the density estimate will
-be 0 outside of \eqn{[xmin, xmax]}. Mirror-reflection is used to correct
-for boundary bias. Discrete variables are convoluted with the uniform
-distribution (see, Nagler, 2017).
-}
-\examples{
-data(wdbc, package = "kdecopula")  # load data
-fit <- kde1d(wdbc[, 5])            # estimate density
-dkde1d(1000, fit)                  # evaluate density estimate
-
-}
-\references{
-Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} \href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
-}
-\seealso{
-\code{\link{dkde1d}}, \code{\link{pkde1d}}, \code{\link{qkde1d}},
-\code{\link{rkde1d}} \code{\link{plot.kde1d}} , \code{\link{lines.kde1d}}
+Function is deprecated, use \code{\link[kde1d:kde1d]{kde1d::kde1d()}} instead.
 }

@@ -14,9 +14,9 @@ kdevine(x, mult_1d = NULL, xmin = NULL, xmax = NULL,
 are multiplied with \code{mult_1d}. Defaults to \code{log(1 + d)} where \code{d} is
 the number of variables after applying \code{\link[cctools:expand_as_numeric]{cctools::expand_as_numeric()}}.}
 
-\item{xmin}{numeric vector of length d; see \code{\link{kde1d}}.}
+\item{xmin}{numeric vector of length d; see \code{\link[kde1d:kde1d]{kde1d::kde1d()}}.}
 
-\item{xmax}{numeric vector of length d; see \code{\link{kde1d}}.}
+\item{xmax}{numeric vector of length d; see \code{\link[kde1d:kde1d]{kde1d::kde1d()}}.}
 
 \item{copula.type}{either \code{"kde"} (default) or \code{"parametric"} for
 kernel or parametric estimation of the vine copula.}
@@ -29,7 +29,7 @@ An object of class \code{kdevine}.
 }
 \description{
 Implements the vine-copula based estimator of Nagler and Czado (2016). The
-marginal densities are estimated by \code{\link{kde1d}}, the vine copula
+marginal densities are estimated by \code{\link[kde1d:kde1d]{kde1d::kde1d()}}, the vine copula
 density by \code{\link{kdevinecop}}. Discrete variables are convoluted with
 the uniform distribution (see, Nagler, 2017). If a variable should be treated
 as discrete, declare it as \code{\link[=ordered]{ordered()}}. Factors are expanded into binary
@@ -54,9 +54,9 @@ Nagler, T., Czado, C. (2016) \emph{Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
 copulas.} Journal of Multivariate Analysis 151, 69-89
 (doi:10.1016/j.jmva.2016.07.003) \cr \cr
-Nagler, T. (2017). \emph{A generic approach to nonparametric function
+Nagler, T. (2018). \emph{A generic approach to nonparametric function
 estimation with mixed data.} \href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
 }
 \seealso{
-\code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}
+\code{\link[=dkdevine]{dkdevine()}}, \code{\link[kde1d:kde1d]{kde1d::kde1d()}}, \code{\link[=kdevinecop]{kdevinecop()}}
 }

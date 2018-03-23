@@ -1,7 +1,7 @@
 #' Kernel density estimatior based on simplified vine copulas
 #'
 #' Implements the vine-copula based estimator of Nagler and Czado (2016). The
-#' marginal densities are estimated by \code{\link{kde1d}}, the vine copula
+#' marginal densities are estimated by [`kde1d::kde1d()`], the vine copula
 #' density by \code{\link{kdevinecop}}. Discrete variables are convoluted with
 #' the uniform distribution (see, Nagler, 2017). If a variable should be treated
 #' as discrete, declare it as [ordered()]. Factors are expanded into binary
@@ -11,8 +11,8 @@
 #' @param mult_1d numeric; all bandwidhts for marginal kernel density estimation
 #'   are multiplied with \code{mult_1d}. Defaults to `log(1 + d)` where `d` is
 #'   the number of variables after applying [cctools::expand_as_numeric()].
-#' @param xmin numeric vector of length d; see \code{\link{kde1d}}.
-#' @param xmax numeric vector of length d; see \code{\link{kde1d}}.
+#' @param xmin numeric vector of length d; see [`kde1d::kde1d()`].
+#' @param xmax numeric vector of length d; see [`kde1d::kde1d()`].
 #' @param copula.type either \code{"kde"} (default) or \code{"parametric"} for
 #'   kernel or parametric estimation of the vine copula.
 #' @param ... further arguments passed to \code{\link{kde1d}} or
@@ -20,15 +20,14 @@
 #'
 #' @return An object of class \code{kdevine}.
 #'
-#' @seealso \code{\link{dkdevine}} \code{\link{kde1d}} \code{\link{kdevinecop}}
+#' @seealso [`dkdevine()`], [`kde1d::kde1d()`], [`kdevinecop()`]
 #'
 #' @references Nagler, T., Czado, C. (2016) *Evading the curse of
 #'   dimensionality in nonparametric density estimation with simplified vine
 #'   copulas.* Journal of Multivariate Analysis 151, 69-89
 #'   (doi:10.1016/j.jmva.2016.07.003) \cr \cr
-#'   Nagler, T. (2017). *A generic approach to nonparametric function
+#'   Nagler, T. (2018). *A generic approach to nonparametric function
 #'   estimation with mixed data.* [arXiv:1704.07457](https://arxiv.org/abs/1704.07457)
-
 #'
 #' @examples
 #' # load data
@@ -44,14 +43,18 @@
 #' pairs(rkdevine(nrow(wdbc), fit))
 #'
 #' @importFrom VineCopula RVineStructureSelect RVineCopSelect
-#' @importFrom cctools expand_vec
+#' @importFrom cctools expand_vec cont_conv
+#' @importFrom kde1d kde1d dkde1d pkde1d qkde1d
 #' @export
 kdevine <- function(x, mult_1d = NULL, xmin = NULL,
                     xmax = NULL, copula.type = "kde", ...) {
-    if (missing(x) & !is.null(list(...)$data))  # for backwards compatibilitiy
+    ## for backwards compatibilitiy
+    if (missing(x) & !is.null(list(...)$data))
         x <- list(...)$data
-    if (!is.null(list(...)$mult.1d))  # for backwards compatibilitiy
+    if (!is.null(list(...)$mult.1d))
         mult_1d <- list(...)$mult.1d
+
+    ## for discrete variables
     x_cc <- cont_conv(x)
     if (NCOL(x_cc) == 1)
         stop("x must be multivariate or a factor.")
@@ -70,26 +73,26 @@ kdevine <- function(x, mult_1d = NULL, xmin = NULL,
     }
 
     ## estimation of the marginals
-    i_disc <- attr(x_cc, "i_disc")
     if (is.null(mult_1d))
         mult_1d <- log(1 + ncol(x_cc))
     marg.dens <- as.list(numeric(d))
     for (k in 1:d) {
-        marg.dens[[k]] <- kde1d(
-            x_cc[, k],
+        marg_args <- list(
+            x = x_cc[, k],
             xmin = xmin[k],
             xmax = xmax[k],
             bw   = bw[k],
-            mult = mult_1d,
-            bw_min = ifelse(k %in% i_disc, 0.5 - attr(x_cc, "theta"), 0)
+            mult = mult_1d
         )
+        marg_args[sapply(marg_args, is.null)] <- NULL
+        marg.dens[[k]] <- do.call(kde1d::kde1d, marg_args)
     }
     res <- list(x_cc = x_cc, marg.dens = marg.dens)
 
     ## estimation of the R-vine copula (only if d > 1)
     if (d > 1) {
         # transform to copula data
-        u <- sapply(1:d, function(k) pkde1d(x_cc[, k], marg.dens[[k]]))
+        u <- sapply(1:d, function(k) kde1d::pkde1d(x_cc[, k], marg.dens[[k]]))
 
         if (copula.type == "kde") {
             res$vine  <- suppressWarnings(
@@ -159,6 +162,7 @@ kdevine <- function(x, mult_1d = NULL, xmin = NULL,
 #' dkdevine(c(1000, 0.1, 0.1), fit)
 #'
 #' @importFrom VineCopula RVinePDF
+#' @importFrom cctools expand_as_numeric
 #'
 #' @export
 dkdevine <- function(x, obj) {
@@ -182,7 +186,7 @@ dkdevine <- function(x, obj) {
             attr(x_k, "i_disc") <- 1
             obj$marg.dens[[k]]$levels <- attr(obj$x_cc, "levels")[[k]]
         }
-        margvals[, k] <- dkde1d(x_k, obj$marg.dens[[k]])
+        margvals[, k] <- kde1d::dkde1d(x_k, obj$marg.dens[[k]])
     }
 
     if (!is.null(obj$vine)) {
@@ -193,7 +197,7 @@ dkdevine <- function(x, obj) {
                 attr(x_k, "i_disc") <- integer(0)
                 obj$marg.dens[[k]]$levels <- NULL
             }
-            u[, k] <- pkde1d(x[, k], obj$marg.dens[[k]])
+            u[, k] <- kde1d::pkde1d(x[, k], obj$marg.dens[[k]])
         }
         if (inherits(obj$vine, "kdevinecop")) {
             vinevals <- dkdevinecop(u, obj = obj$vine, stable = TRUE)
@@ -225,7 +229,7 @@ dkdevine <- function(x, obj) {
 #' @seealso
 #' \code{\link{kdevine}},
 #' \code{\link{rkdevinecop}},
-#' \code{\link{rkde1d}}
+#' [`kde1d::rkde1d()`]
 #'
 #' @examples
 #' # load and plot data
@@ -246,7 +250,7 @@ rkdevine <- function(n, obj, quasi = FALSE) {
                    "parametric" = RVineSim(n, obj$vine))
     # use quantile transformation for marginals
     sapply(seq_len(ncol(usim)), function(i)
-        qkde1d(usim[, i], obj$marg.dens[[i]])
+        kde1d::qkde1d(usim[, i], obj$marg.dens[[i]])
     )
 }
 

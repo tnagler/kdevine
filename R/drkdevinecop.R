@@ -150,6 +150,7 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
 #' @rdname dkdevinecop
 #' @importFrom kdecopula hkdecop
 #' @importFrom stats runif
+#' @importFrom qrng ghalton
 #' @export
 rkdevinecop <- function(n, obj, U = NULL, quasi = FALSE) {
     n <- round(n)
