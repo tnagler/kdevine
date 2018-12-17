@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Kernel Smoothing for Bivariate Copula Densities — kdevine-package" />
+
+<meta property="og:description" content="This package implements a vine copula based kernel density estimator. The
+estimator does not suffer from the curse of dimensionality and is therefore
+well suited for high-dimensional applications (see, Nagler and Czado, 2016)." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +61,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">kdevine</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">kdevine</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +91,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,17 +99,21 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Kernel Smoothing for Bivariate Copula Densities</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/kdevine/blob/master/R/kdevine-package.R'><code>R/kdevine-package.R</code></a></small>
+    <div class="hidden name"><code>kdevine-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This package implements a vine copula based kernel density estimator. The
 estimator does not suffer from the curse of dimensionality and is therefore
 well suited for high-dimensional applications (see, Nagler and Czado, 2016).</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -98,17 +128,17 @@ estimated parameterically (only the margins are nonparametric).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Nagler, T., Czado, C. (2016)  <em>Evading the curse of
+    <p>Nagler, T., Czado, C. (2016) <br /> <em>Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
-copulas.</em>  <em>Journal of Multivariate Analysis 151, 69-89
-(doi:10.1016/j.jmva.2016.07.003)</em></p>
-<p>Nagler, T., Schellhase, C. and Czado, C. (2017)  <em>Nonparametric
+copulas.</em> <br /> <em>Journal of Multivariate Analysis 151, 69-89
+(doi:10.1016/j.jmva.2016.07.003)</em> <br /></p>
+<p>Nagler, T., Schellhase, C. and Czado, C. (2017) <br /> <em>Nonparametric
 estimation of simplified vine copula models: comparison of methods</em>
 arXiv:1701.00845</p>
-<p>Nagler, T. (2017) 
+<p>Nagler, T. (2017) <br />
 <em>A generic approach to nonparametric function
-estimation with mixed data.</em> 
-<a href = 'https://arxiv.org/abs/1704.07457'>arXiv:1704.07457</a></p>
+estimation with mixed data.</em> <br />
+<a href='https://arxiv.org/abs/1704.07457'>arXiv:1704.07457</a></p>
     
 
   </div>
@@ -134,11 +164,14 @@ Thomas Nagler
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

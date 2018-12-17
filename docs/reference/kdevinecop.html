@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Kernel estimation of vine copula densities — kdevinecop" />
+
+<meta property="og:description" content="The function estimates a vine copula density using kernel estimators for the
+pair copulas (based on the kdecopula package)." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">kdevine</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">kdevine</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,22 +98,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Kernel estimation of vine copula densities</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/kdevine/blob/master/R/kdevinecop.R'><code>R/kdevinecop.R</code></a></small>
+    <div class="hidden name"><code>kdevinecop.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>The function estimates a vine copula density using kernel estimators for the
 pair copulas (based on the kdecopula package).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>kdevinecop</span>(<span class='no'>data</span>, <span class='kw'>matrix</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"TLL2"</span>, <span class='kw'>renorm.iter</span> <span class='kw'>=</span> <span class='fl'>3L</span>,
   <span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>test.level</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>trunc.level</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>treecrit</span> <span class='kw'>=</span> <span class='st'>"tau"</span>,
   <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -153,33 +182,31 @@ estimate will be gathered (see <code><a href='http://www.rdocumentation.org/pack
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Nagler, T., Czado, C. (2016)  Evading the curse of
+    <p>Nagler, T., Czado, C. (2016) <br /> Evading the curse of
 dimensionality in nonparametric density estimation with simplified vine
-copulas.  <em>Journal of Multivariate Analysis 151, 69-89
+copulas. <br /> <em>Journal of Multivariate Analysis 151, 69-89
 (doi:10.1016/j.jmva.2016.07.003)</em></p>
-<p>Nagler, T., Schellhase, C. and Czado, C. (2017)  Nonparametric
+<p>Nagler, T., Schellhase, C. and Czado, C. (2017) <br /> Nonparametric
 estimation of simplified vine copula models: comparison of methods
 arXiv:1701.00845</p>
-<p>Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). 
+<p>Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). <br />
 Selecting and estimating regular vine copulae and application to financial
-returns. 
+returns. <br />
 Computational Statistics &amp; Data Analysis, 59(0):52--69.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='dkdevinecop.html'>dkdevinecop</a></code>,
+    <div class='dont-index'><p><code><a href='dkdevinecop.html'>dkdevinecop</a></code>,
 <code><a href='http://www.rdocumentation.org/packages/kdecopula/topics/kdecop'>kdecop</a></code>,
 <code><a href='http://www.rdocumentation.org/packages/VineCopula/topics/BiCopIndTest'>BiCopIndTest</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p>
+<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>wdbc</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"kdecopula"</span>)
 <span class='co'># rank-transform to copula data (margins are uniform)</span>
-<span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='kw'>VineCopula</span><span class='kw'>::</span><span class='fu'>pobs</span>(<span class='no'>wdbc</span>[, <span class='fl'>5</span>:<span class='fl'>7</span>], <span class='kw'>ties</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
-
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>kdevinecop</span>(<span class='no'>u</span>)                   <span class='co'># estimate density</span>
-<span class='fu'><a href='dkdevinecop.html'>dkdevinecop</a></span>(<span class='fu'>c</span>(<span class='fl'>0.1</span>, <span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='no'>fit</span>)     <span class='co'># evaluate density estimate</span></div><div class='output co'>#&gt; [1] 3.199711</div><div class='input'><span class='fu'>contour</span>(<span class='no'>fit</span>)                           <span class='co'># contour matrix (Gaussian scale)</span></div><img src='kdevinecop-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>pairs</span>(<span class='fu'><a href='dkdevinecop.html'>rkdevinecop</a></span>(<span class='fl'>500</span>, <span class='no'>fit</span>))           <span class='co'># plot simulated data</span></div><img src='kdevinecop-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>VineCopula</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/VineCopula/topics/pobs'>pobs</a></span>(<span class='no'>wdbc</span>[, <span class='fl'>5</span>:<span class='fl'>7</span>], <span class='kw'>ties</span> <span class='kw'>=</span> <span class='st'>"average"</span>)</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>kdevinecop</span>(<span class='no'>u</span>)                   <span class='co'># estimate density</span>
+<span class='fu'><a href='dkdevinecop.html'>dkdevinecop</a></span>(<span class='fu'>c</span>(<span class='fl'>0.1</span>, <span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='no'>fit</span>)     <span class='co'># evaluate density estimate</span></div><div class='output co'>#&gt; [1] 9.040116e-17</div><div class='input'><span class='fu'>contour</span>(<span class='no'>fit</span>)                           <span class='co'># contour matrix (Gaussian scale)</span></div><div class='img'><img src='kdevinecop-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>pairs</span>(<span class='fu'><a href='dkdevinecop.html'>rkdevinecop</a></span>(<span class='fl'>500</span>, <span class='no'>fit</span>))           <span class='co'># plot simulated data</span></div><div class='img'><img src='kdevinecop-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -205,11 +232,14 @@ Computational Statistics &amp; Data Analysis, 59(0):52--69.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

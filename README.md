@@ -4,6 +4,10 @@ kdevine
 
 [![Build status Linux](https://travis-ci.org/tnagler/kdevine.svg?branch=master)](https://travis-ci.org/tnagler/kdevine) [![Build status Windows](https://ci.appveyor.com/api/projects/status/epfs987wspjqkwlk/branch/master?svg=true)](https://ci.appveyor.com/project/tnagler/kdevine) [![CRAN version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
+> **The kdevine package is no longer actively developed.** Consider using
+> - the [kde1d](https://github.com/tnagler/kde1d) package for marginal estimation,
+> - the functions `vine()` and `vinecop()` from the [rvinecopulib](https://github.com/vinecopulib/rvinecopulib) package as replacements for `kdevine()` and `kdevincop()`.
+
 This package implements a vine copula based kernel density estimator. The estimator does not suffer from the curse of dimensionality and is therefore well suited for high-dimensional applications (see, Nagler and Czado, 2016). The package is built on top of the copula density estimators in [kdecopula](https://github.com/tnagler/kdecopula) and let's you choose from all its implemented methods. The package can handle discrete and categorical data via [continuous convolution](https://github.com/tnagler/cctools).
 
 -   [How to install](#how-to-install)
@@ -61,12 +65,12 @@ References
 
 Nagler, T., Czado, C. (2016)
 Evading the curse of dimensionality in nonparametric density estimation with simplified vine copulas
-*Journal of Multivariate Analysis 151, 69-89* ([doi:10.1016/j.jmva.2016.07.003](http://dx.doi.org/10.1016/j.jmva.2016.07.003), [preprint](http://arxiv.org/abs/1503.03305))
+*Journal of Multivariate Analysis 151, 69-89* [\[preprint\]](http://arxiv.org/abs/1503.03305)
 
 Nagler, T., Schellhase, C. and Czado, C. (2017)
 Nonparametric estimation of simplified vine copula models: comparison of methods
-[arXiv:1701.00845](http://arxiv.org/abs/1701.00845)
+*Dependence Modeling, 5:99-120* [\[preprint\]](http://arxiv.org/abs/1701.00845)
 
-Nagler, T. (2017)
+Nagler, T. (2018)
 A generic approach to nonparametric function estimation with mixed data
-[arXiv:1704.07457](https://arxiv.org/abs/1704.07457)
+*Statistics & Probability Letters, 137:326–330* [\[preprint\]](https://arxiv.org/abs/1704.07457)
