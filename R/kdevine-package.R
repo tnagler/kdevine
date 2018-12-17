@@ -37,3 +37,10 @@
 #' @keywords package
 #'
 NULL
+
+.onAttach <- function(libname, pkgname) {
+    packageStartupMessage("The kdevine package is no longer actively developed. ",
+                          "Consider using \n   - the 'kde1d' package for marginal estimation, \n",
+                          "   - the functions vine() and vinecop() from the 'rvinecopulib' \n",
+                          "     package as replacements for kdevine() and kdevincop().")
+}
