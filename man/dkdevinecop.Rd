@@ -4,7 +4,6 @@
 \alias{dkdevinecop}
 \alias{dkevinecop}
 \alias{rkdevinecop}
-\alias{rkdevinecop}
 \title{Working with a \code{kdevinecop} object}
 \usage{
 dkdevinecop(u, obj, stable = FALSE)

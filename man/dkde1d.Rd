@@ -7,7 +7,6 @@
 \alias{rkde1d}
 \alias{pkde1d}
 \alias{qkde1d}
-\alias{rkde1d}
 \title{Working with a kde1d object}
 \usage{
 dkde1d(x, obj)

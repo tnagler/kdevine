@@ -173,7 +173,6 @@ qkde1d <- function(x, obj) {
     if (is.data.frame(x))
         x <- x[[1]]
     stopifnot(all((x >= 0) & (x <= 1)))
-    x <- cctools::expand_as_numeric(x)
     q <- eval_qkde1d(sort(obj$x_cc), x, obj$xmin, obj$xmax, obj$bw)
 
     ## for discrete variables compute quantile from the density
@@ -186,7 +185,7 @@ qkde1d <- function(x, obj) {
 
         # generalized inverse
         q <- x_all_num[vapply(x, function(y) which(y <= pp)[1], integer(1))]
-        q <- ordered(obj$levels[q], levels = obj$levels)
+        q <- ordered(obj$levels[q + 1], levels = obj$levels)
     }
 
     q
