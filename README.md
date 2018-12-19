@@ -6,7 +6,7 @@ kdevine
 
 > **The kdevine package is no longer actively developed.** Consider using
 > - the [kde1d](https://github.com/tnagler/kde1d) package for marginal estimation,
-> - the functions `vine()` and `vinecop()` from the [rvinecopulib](https://github.com/vinecopulib/rvinecopulib) package as replacements for `kdevine()` and `kdevincop()`.
+> - the functions `vine()` and `vinecop()` from the [rvinecopulib](https://github.com/vinecopulib/rvinecopulib) package as replacements for `kdevine()` and `kdevinecop()`.
 
 This package implements a vine copula based kernel density estimator. The estimator does not suffer from the curse of dimensionality and is therefore well suited for high-dimensional applications (see, Nagler and Czado, 2016). The package is built on top of the copula density estimators in [kdecopula](https://github.com/tnagler/kdecopula) and let's you choose from all its implemented methods. The package can handle discrete and categorical data via [continuous convolution](https://github.com/tnagler/cctools).
 

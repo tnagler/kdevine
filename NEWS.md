@@ -5,7 +5,7 @@ The kdevine package is no longer actively developed. Consider using
 
    - the 'kde1d' package for marginal estimation,   
    - the functions `vine()` and `vinecop()` from the 'rvinecopulib' 
-     package as replacements for `kdevine()` and `kdevincop()`.
+     package as replacements for `kdevine()` and `kdevinecop()`.
      
 BUG FIXES
 
