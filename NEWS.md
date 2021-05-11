@@ -1,3 +1,11 @@
+kdevine 0.4.3
+---------
+
+BUG FIXES
+
+   * removed all calls to `closeAllConnections()`.
+
+
 kdevine 0.4.2
 ---------
 

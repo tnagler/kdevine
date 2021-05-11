@@ -44,7 +44,6 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
             cl <- makeCluster(cores)
             registerDoParallel(cl)
             on.exit(try(stopCluster(), silent = TRUE))
-            on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
 

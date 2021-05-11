@@ -153,7 +153,6 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
             cl <- makeCluster(cores)
             registerDoParallel(cl)
             on.exit(try(stopCluster(), silent = TRUE))
-            on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
 
