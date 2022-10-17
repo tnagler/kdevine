@@ -1,3 +1,11 @@
+kdevine 0.4.4
+---------
+
+BUG FIXES
+
+   * fix warning about bitwise operation on booleans.
+   
+ 
 kdevine 0.4.3
 ---------
 
