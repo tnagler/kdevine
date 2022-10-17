@@ -49,7 +49,7 @@ NumericVector eval_kde1d(const NumericVector xsort,
     double n = xsort.size();
 
     for (int i = 0; i < xev.size(); ++i) {
-        if ((xev[i] < xmin) | (xev[i] > xmax)) {
+        if ((xev[i] < xmin) || (xev[i] > xmax)) {
             out[i] = 0;
         } else {
             if (xev[i] < xsort[0] - 0.99 * bw) {
