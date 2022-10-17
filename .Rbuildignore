@@ -8,3 +8,4 @@
 ^appveyor\.yml$
 ^docs$
 LICENSE
+.github

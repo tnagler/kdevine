@@ -4,9 +4,9 @@
 [![R build
 status](https://github.com/tnagler/kdevine/workflows/R-CMD-check/badge.svg)](https://github.com/tnagler/kdevine)
 [![CRAN
-version](http://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine)
+version](https://www.r-pkg.org/badges/version/kdevine)](https://cran.r-project.org/package=kdevine)
 [![License: GPL
-v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 > **The kdevine package is no longer actively developed.** Consider
 > using  
@@ -83,13 +83,13 @@ Nagler, T., Czado, C. (2016)
 Evading the curse of dimensionality in nonparametric density estimation
 with simplified vine copulas  
 *Journal of Multivariate Analysis 151, 69-89*
-[\[preprint\]](http://arxiv.org/abs/1503.03305)
+[\[preprint\]](https://arxiv.org/abs/1503.03305)
 
 Nagler, T., Schellhase, C. and Czado, C. (2017)  
 Nonparametric estimation of simplified vine copula models: comparison of
 methods  
 *Dependence Modeling, 5:99-120*
-[\[preprint\]](http://arxiv.org/abs/1701.00845)
+[\[preprint\]](https://arxiv.org/abs/1701.00845)
 
 Nagler, T. (2018)  
 A generic approach to nonparametric function estimation with mixed
