@@ -14,7 +14,7 @@ The multivariate kernel density estimators is implemented by the
 \code{\link{kdevine}} function. It combines a kernel density estimator for
 the margins (\code{\link{kde1d}}) and a kernel estimator of the vine copula
 density (\code{\link{kdevinecop}}). The package is built on top of the copula
-density estimators in the \link[kdecopula:kdecopula-package]{kdecopula::kdecopula-package} and let's you
+density estimators in the \link[kdecopula:kdecopula]{kdecopula::kdecopula-package} and let's you
 choose from all its implemented methods. Optionally, the vine copula can be
 estimated parameterically (only the margins are nonparametric).
 }

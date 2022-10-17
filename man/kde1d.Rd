@@ -4,8 +4,7 @@
 \alias{kde1d}
 \title{Univariate kernel density estimation for bounded and unbounded support}
 \usage{
-kde1d(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL,
-  bw_min = 0, ...)
+kde1d(x, mult = 1, xmin = -Inf, xmax = Inf, bw = NULL, bw_min = 0, ...)
 }
 \arguments{
 \item{x}{vector of length \eqn{n}.}

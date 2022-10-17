@@ -4,8 +4,7 @@
 \alias{kdevine}
 \title{Kernel density estimatior based on simplified vine copulas}
 \usage{
-kdevine(x, mult_1d = NULL, xmin = NULL, xmax = NULL,
-  copula.type = "kde", ...)
+kdevine(x, mult_1d = NULL, xmin = NULL, xmax = NULL, copula.type = "kde", ...)
 }
 \arguments{
 \item{x}{(\eqn{n x d}) data matrix.}

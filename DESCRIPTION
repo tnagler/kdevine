@@ -26,6 +26,6 @@ Imports:
     foreach
 LazyData: yes
 LinkingTo: Rcpp
-RoxygenNote: 6.1.0
+RoxygenNote: 7.2.0
 Suggests: testthat
 Roxygen: list(markdown = TRUE)

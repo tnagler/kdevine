@@ -4,9 +4,18 @@
 \alias{kdevinecop}
 \title{Kernel estimation of vine copula densities}
 \usage{
-kdevinecop(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
-  mult = 1, test.level = NA, trunc.level = NA, treecrit = "tau",
-  cores = 1, info = FALSE)
+kdevinecop(
+  data,
+  matrix = NA,
+  method = "TLL2",
+  renorm.iter = 3L,
+  mult = 1,
+  test.level = NA,
+  trunc.level = NA,
+  treecrit = "tau",
+  cores = 1,
+  info = FALSE
+)
 }
 \arguments{
 \item{data}{(\eqn{n x d}) matrix of copula data (have to lie in \eqn{[0,1^d]}).}

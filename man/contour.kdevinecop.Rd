@@ -4,8 +4,7 @@
 \alias{contour.kdevinecop}
 \title{Contour plots of pair copula kernel estimates}
 \usage{
-\method{contour}{kdevinecop}(x, tree = "ALL", xylim = NULL,
-  cex.nums = 1, ...)
+\method{contour}{kdevinecop}(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...)
 }
 \arguments{
 \item{x}{a \code{\link{kdevinecop}} object.}
