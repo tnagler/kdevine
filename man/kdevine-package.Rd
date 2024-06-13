@@ -33,6 +33,14 @@ Nagler, T. (2017) \cr
 estimation with mixed data.} \cr
 \href{https://arxiv.org/abs/1704.07457}{arXiv:1704.07457}
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tnagler/kdevine}
+  \item Report bugs at \url{https://github.com/tnagler/kdevine/issues}
+}
+
+}
 \author{
 Thomas Nagler
 }

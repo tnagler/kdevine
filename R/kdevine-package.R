@@ -14,7 +14,6 @@
 #'
 #' @name kdevine-package
 #' @aliases kdevine-package
-#' @docType package
 #' @useDynLib kdevine, .registration = TRUE
 #'
 #' @author Thomas Nagler
@@ -36,7 +35,7 @@
 #'
 #' @keywords package
 #'
-NULL
+"_PACKAGE"
 
 .onAttach <- function(libname, pkgname) {
     packageStartupMessage("The kdevine package is no longer actively developed. ",

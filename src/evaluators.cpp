@@ -121,28 +121,31 @@ NumericVector eval_qkde1d(const NumericVector x,
                           const double xmax,
                           const double bw)
 {
-    NumericVector out(qev.size()), x0, x1, ans, val;
+    NumericVector out(qev.size());
+    NumericVector x0(1), x1(1), x0_(1), x1_(1), ans(1), val(1);
     ans = 0.0, val = 0.0;
-    double tol = ::fmax(1e-10 * (x1[0] - x0[0]), 1e-10);
+    double tol = std::fmax(1e-10 * (x0_[0] - x1_[0]), 1e-10);
 
     for (int i = 0; i < qev.size(); ++i) {
-        if (::fabs(qev[i]) < 1e-30)
+        if (std::fabs(qev[i]) < 1e-30)
             out[i] = (xmin != xmin) ? R_NegInf : xmin;
-        if (::fabs(qev[i] - 1) < 1e-30)
+        if (std::fabs(qev[i] - 1) < 1e-30)
             out[i] = (xmax != xmax) ? R_PosInf : xmin;;
 
+        x0 = x0_;
+        x1 = x1_;
+
         int br = 0;
-        x0 = min(x) - 5 * bw;
-        x1 = max(x) + 5 * bw;
+
         NumericVector ql = eval_pkde1d(x, x0, xmin, xmax, bw);
         NumericVector qh = eval_pkde1d(x, x1, xmin, xmax, bw);
         ql = ql - qev[i];
         qh = qh - qev[i];
-        if (::fabs(ql[0]) <= tol) {
+        if (std::fabs(ql[0]) <= tol) {
             ans = x0;
             br = 1;
         }
-        if (::fabs(qh[0]) <= tol) {
+        if (std::fabs(qh[0]) <= tol) {
             ans = x1;
             br = 1;
         }
@@ -153,9 +156,9 @@ NumericVector eval_qkde1d(const NumericVector x,
             NumericVector val = eval_pkde1d(x, ans, xmin, xmax, bw);
             val[0] = val[0] - qev[i];
             //stop if values become too close (avoid infinite loop)
-            if (::fabs(val[0]) <= tol)
+            if (std::fabs(val[0]) <= tol)
                 br = 1;
-            if (::fabs(x0[0] - x1[0]) <= tol)
+            if (std::fabs(x0[0] - x1[0]) <= tol)
                 br = 1;
 
             if (val[0] > 0.0) {

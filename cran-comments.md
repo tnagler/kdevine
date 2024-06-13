@@ -1,5 +1,8 @@
+Fixes segfaults on R-devel builds caused by careless use of uninitialized 
+Rcpp::NumericVectors.
+
 ## Test environments
-* ubuntu 14.04 (devel, release) 
+* ubuntu 20.04 (devel, release) 
 * macOs catalina (devel, release) 
 * win-builder (devel)
 
