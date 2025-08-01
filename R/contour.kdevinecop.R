@@ -6,7 +6,7 @@
 #' @param xylim numeric vector of length 2; sets \code{xlim} and \code{ylim}
 #' for the contours.
 #' @param cex.nums numeric; expansion factor for font of the numbers.
-#' @param ... arguments passed to \code{\link{contour.kdecopula}}.
+#' @param ... arguments passed to \code{\link[kdecopula]{contour.kdecopula}}.
 #'
 #' @examples
 #' data(wdbc, package = "kdecopula")                     # load data

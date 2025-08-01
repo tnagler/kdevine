@@ -56,7 +56,7 @@ An object of class \code{kdevinecop}. That is, a list containing
 }
 \description{
 The function estimates a vine copula density using kernel estimators for the
-pair copulas (based on the \link{kdecopula} package).
+pair copulas (based on the \link[kdecopula]{kdecopula-package}).
 }
 \examples{
 data(wdbc, package = "kdecopula")

@@ -17,7 +17,7 @@ for the contours.}
 
 \item{cex.nums}{numeric; expansion factor for font of the numbers.}
 
-\item{...}{arguments passed to \code{\link{contour.kdecopula}}.}
+\item{...}{arguments passed to \code{\link[kdecopula]{contour.kdecopula}}.}
 }
 \description{
 Contour plots of pair copula kernel estimates

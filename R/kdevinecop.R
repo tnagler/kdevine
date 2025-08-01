@@ -1,7 +1,7 @@
 #' Kernel estimation of vine copula densities
 #'
 #' The function estimates a vine copula density using kernel estimators for the
-#' pair copulas (based on the \link{kdecopula} package).
+#' pair copulas (based on the \link[kdecopula]{kdecopula-package}).
 #'
 #' @param data (\eqn{n x d}) matrix of copula data (have to lie in \eqn{[0,1^d]}).
 #' @param matrix R-Vine matrix (\eqn{n x d}) specifying the structure of the vine;
