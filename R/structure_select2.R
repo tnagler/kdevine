@@ -1,34 +1,53 @@
-structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
-                              trunc.level, renorm.iter, cores, info, progress = FALSE) {
+structure_select2 <- function(
+    data,
+    type,
+    method,
+    mult,
+    struct.crit,
+    test.level,
+    trunc.level,
+    renorm.iter,
+    cores,
+    info,
+    progress = FALSE
+) {
     if (type == 0) {
         type <- "RVine"
     } else if (type == 1) {
         type <- "CVine"
     }
-    if (type != "RVine" & type != "CVine")
+    if (type != "RVine" & type != "CVine") {
         stop("Vine model not implemented.")
+    }
     n <- nrow(data)
     d <- ncol(data)
-    if (n < 2)
+    if (n < 2) {
         stop("Number of observations has to be at least 2.")
-    if (d < 2)
+    }
+    if (d < 2) {
         stop("Dimension has to be at least 2.")
-    if (any(data > 1) || any(data < 0))
+    }
+    if (any(data > 1) || any(data < 0)) {
         stop("Data has be in the interval [0,1].")
-    if (is.na(test.level))
+    }
+    if (is.na(test.level)) {
         test.level <- 1
-    if (!(struct.crit %in% c("tau", "AIC", "cAIC", "hoeffd")))
+    }
+    if (!(struct.crit %in% c("tau", "AIC", "cAIC", "hoeffd"))) {
         stop("'struct.crit' has to be one of 'tau', 'AIC', 'cAIC', or 'hoeffd'")
+    }
 
     # set names if not available
-    if (is.null(colnames(data)))
+    if (is.null(colnames(data))) {
         colnames(data) = paste("V", 1:d, sep = "")
+    }
 
     ## initialize objects
     RVine <- list(Tree = NULL, Graph = NULL)
     res <- as.list(numeric(d - 1))
-    for (i in 1:(d - 1))
+    for (i in 1:(d - 1)) {
         res[[i]] <- as.list(numeric(d - i))
+    }
     llikv <- array(0, dim = c(d, d, n))
     llik <- matrix(0, d, d)
     effp <- matrix(0, d, d)
@@ -38,8 +57,9 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
 
     ## register parallel backend
     if (cores != 1 | is.na(cores)) {
-        if (is.na(cores))
+        if (is.na(cores)) {
             cores <- max(1, detectCores() - 1)
+        }
         if (cores > 1) {
             cl <- makeCluster(cores)
             registerDoParallel(cl)
@@ -52,14 +72,16 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
     mst <- findMaxTree2(g, mode = type)
 
     ## estimate copulas in first tree and store results
-    est <- est.FirstTreeCopulas2(mst,
-                                 data,
-                                 method = method,
-                                 mult = mult,
-                                 info = info,
-                                 test.level = test.level,
-                                 renorm.iter = renorm.iter,
-                                 parallel = cores > 1)
+    est <- est.FirstTreeCopulas2(
+        mst,
+        data,
+        method = method,
+        mult = mult,
+        info = info,
+        test.level = test.level,
+        renorm.iter = renorm.iter,
+        parallel = cores > 1
+    )
     res[[1]] <- est$est
     VineTree <- est$mst
     RVine$Tree[[1]] <- VineTree
@@ -67,23 +89,40 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
 
     ## higher trees
     for (k in 2:(d - 1)) {
-        g <- buildNextGraph2(VineTree,
-                             weights = NA,
-                             struct.crit = struct.crit,
-                             parallel = cores > 1)
+        g <- buildNextGraph2(
+            VineTree,
+            weights = NA,
+            struct.crit = struct.crit,
+            parallel = cores > 1
+        )
+        # kraus method
+        {
+            taus <- g$E$weights
+            ps <- sapply(seq_along(g$E$u), \(i) {
+                covariates <- data[, g$E$conditioningSet[[i]]]
+                pacotest::pacotest(g$E$u[[i]], covariates, "CCC")$pValue
+            })
+            tau_rank <- rank(taus)
+            p_rank <- rank(ps)
+            score <- 0.4 * tau_rank + 0.6 * p_rank
+            g$E$weights <- score
+        }
+
         mst <- findMaxTree2(g, mode = type)
-        est <- est.TreeCopulas2(mst,
-                                k = k,
-                                d2 = d,
-                                data = data,
-                                oldVineGraph = VineTree,
-                                method = method,
-                                mult = mult,
-                                info = info,
-                                test.level = test.level,
-                                renorm.iter = renorm.iter,
-                                parallel = cores > 1,
-                                truncate = trunc.level <= k)
+        est <- est.TreeCopulas2(
+            mst,
+            k = k,
+            d2 = d,
+            data = data,
+            oldVineGraph = VineTree,
+            method = method,
+            mult = mult,
+            info = info,
+            test.level = test.level,
+            renorm.iter = renorm.iter,
+            parallel = cores > 1,
+            truncate = trunc.level <= k
+        )
 
         res[[k]] <- est$est
         VineTree <- est$tree
@@ -104,28 +143,32 @@ structure_select2 <- function(data, type, method, mult, struct.crit, test.level,
                 effp[k, i] <- pcfit$info$effp
                 AIC[k, i] <- -2 * pcfit$info$loglik + 2 * effp[k, i]
                 cAIC[k, i] <-
-                    AIC[k, i] + (2 * effp[k, i] * (effp[k, i] + 1)) /
-                    (n - effp[k, i] - 1)
+                    AIC[k, i] +
+                    (2 * effp[k, i] * (effp[k, i] + 1)) /
+                        (n - effp[k, i] - 1)
                 BIC[k, i] <- -2 * pcfit$info$loglik + log(n) * effp[k, i]
             }
         }
     }
     res[[d + 2]] <- if (info) {
-        list(llikv       = apply(llikv, 3, sum),
-             loglik      = sum(llik),
-             pair.loglik = llik,
-             effp        = sum(effp),
-             pair.effp   = effp,
-             AIC         = sum(AIC),
-             pair.AIC    = AIC,
-             cAIC        =
-                 sum(AIC) +
-                 (2 * sum(effp) * (sum(effp) + 1)) /
-                 (n - sum(effp) - 1),
-             pair.cAIC   = cAIC,
-             BIC         = sum(BIC),
-             pair.BIC    = BIC)
-    } else list(NULL)
+        list(
+            llikv = apply(llikv, 3, sum),
+            loglik = sum(llik),
+            pair.loglik = llik,
+            effp = sum(effp),
+            pair.effp = effp,
+            AIC = sum(AIC),
+            pair.AIC = AIC,
+            cAIC = sum(AIC) +
+                (2 * sum(effp) * (sum(effp) + 1)) /
+                    (n - sum(effp) - 1),
+            pair.cAIC = cAIC,
+            BIC = sum(BIC),
+            pair.BIC = BIC
+        )
+    } else {
+        list(NULL)
+    }
 
     names(res) <- vapply(1:(d - 1), function(x) paste("T", x, sep = ""), "")
     names(res)[d:(d + 2)] <- c("data", "matrix", "info")
@@ -493,6 +536,7 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, struct.crit = "tau", par
     g$E$conditionedSet  <- lapply(out, function(x) x$nedSet)
     g$E$conditioningSet <- lapply(out, function(x) x$ningSet)
     g$E$todel           <- sapply(out, function(x) x$todel)
+    g$E$u               <- lapply(out, function(x) x$u)
 
     ## delete edges that are prohibited by the proximity condition
     deleteEdges(g)
@@ -520,7 +564,8 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
     ## dummy output
     w <- nedSet <- ningSet <- name <- NA
     todel <- TRUE
-
+    u <- NULL
+    
     # info if proximity condition is fulfilled ...
     if (ok) {
         ## get data
@@ -536,7 +581,8 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
         }
         zr1a <- if (is.list(zr1)) as.vector(zr1[[1]]) else zr1
         zr2a <- if (is.list(zr2)) as.vector(zr2[[1]]) else zr2
-
+        u <- cbind(zr1a, zr2a)
+            
         ## calculate Kendall's tau
         keine_nas <- !(is.na(zr1a) | is.na(zr2a))
         if (struct.crit == "tau") {
@@ -582,7 +628,8 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights, struct.crit = "tau") {
          nedSet = nedSet,
          ningSet = ningSet,
          name = name,
-         todel = todel)
+         todel = todel,
+         u = u)
 }
 
 ## functions for handling the tree structure -------------------------
@@ -730,7 +777,9 @@ deleteEdges <- function(g) {
               names           = g$E$names[keep],
               weights         = g$E$weights[keep],
               conditionedSet  = g$E$conditionedSet[keep],
-              conditioningSet = g$E$conditioningSet[keep])
+              conditioningSet = g$E$conditioningSet[keep],
+              conditioningSet = g$E$conditioningSet[keep],
+              u               = g$E$u[keep])
 
     ## return reduced graph
     list(V = g$V, E = E)
