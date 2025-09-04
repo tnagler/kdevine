@@ -24,10 +24,11 @@ Imports:
     doParallel,
     parallel,
     foreach,
-    pacotest
+    pacotest,
+    rvinecopulib
 LazyData: yes
 LinkingTo: Rcpp
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: testthat
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8

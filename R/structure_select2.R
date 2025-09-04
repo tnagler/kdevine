@@ -138,15 +138,15 @@ structure_select2 <- function(
             hfit <- res[[i]][[k - i]]$h
             if (info) {
                 pcfit <- res[[i]][[k - i]]$c
-                llikv[k, i, ] <- log(pcfit$info$likvalues)
-                llik[k, i] <- pcfit$info$loglik
-                effp[k, i] <- pcfit$info$effp
-                AIC[k, i] <- -2 * pcfit$info$loglik + 2 * effp[k, i]
+                llikv[k, i, ] <- 0
+                llik[k, i] <- pcfit$loglik
+                effp[k, i] <- pcfit$npars
+                AIC[k, i] <- -2 * pcfit$loglik + 2 * effp[k, i]
                 cAIC[k, i] <-
                     AIC[k, i] +
                     (2 * effp[k, i] * (effp[k, i] + 1)) /
                         (n - effp[k, i] - 1)
-                BIC[k, i] <- -2 * pcfit$info$loglik + log(n) * effp[k, i]
+                BIC[k, i] <- -2 * pcfit$loglik + log(n) * effp[k, i]
             }
         }
     }
@@ -183,7 +183,7 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
     d <- nrow(mst$E$nums)
 
     ## estimation
-    pkgs <- c("kdevine", "kdecopula")
+    pkgs <- c("kdevine", "kdecopula", "rvinecopulib")
 
     ## For independence pair-copulas
     indepinfo <- list(effp = 0,
@@ -234,16 +234,9 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
             browser()
 
         if (indep) {
-            pcfit <- list()
-            if (info)
-                pcfit$info <- indepinfo
-            class(pcfit) <- c("kdecopula", "indep.copula")
+            pcfit <- bicop(samples, family = "indep")
         } else {
-            pcfit <- kdecop(s,
-                            method = method,
-                            mult = mult,
-                            renorm.iter = renorm.iter,
-                            info = info)
+            pcfit <- bicop(s, mult = mult, family = "tll")
             # pcfit$udata <- NULL
         }
 
@@ -252,12 +245,8 @@ est.FirstTreeCopulas2 <- function(mst, data.univ, method, mult, test.level,
             Copula.CondData.1 <- s[,1]
             Copula.CondData.2 <- s[,2]
         } else {
-            Copula.CondData.1 <- list(hkdecop(s,
-                                              obj = pcfit,
-                                              cond.var = 2L))
-            Copula.CondData.2 <- list(hkdecop(s,
-                                              obj = pcfit,
-                                              cond.var = 1L))
+            Copula.CondData.1 <- list(hbicop(s, pcfit, cond_var = 2L))
+            Copula.CondData.2 <- list(hbicop(s, pcfit, cond_var = 1L))
         }
 
         ## store estimates
@@ -317,7 +306,7 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
 
     ## estimation
     exp <- c("split_name", "split_num", "naming")
-    pkgs <- c("kdecopula")
+    pkgs <- c("kdecopula", "rvinecopulib")
     doEst <- function(i, mst) {
         ## get edge and corresponding data
         con <- rev(mst$E$nums[i, ])
@@ -374,16 +363,9 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
         if (truncate)
             indep <- TRUE
         if (indep) {
-            pcfit <- list()
-            if (info)
-                pcfit$info <- indepinfo
-            class(pcfit) <- c("kdecopula", "indep.copula")
+            pcfit <- bicop(samples, family = "indep")
         } else {
-            pcfit <- kdecop(samples,
-                            mult = mult,
-                            method = method,
-                            renorm.iter = renorm.iter,
-                            info = info)
+            pcfit <- bicop(samples, mult = mult, family = "tll")
             # pcfit$udata <- NULL
         }
 
@@ -398,12 +380,12 @@ est.TreeCopulas2 <- function(mst, k, d2, data, oldVineGraph, method, mult, info,
             Copula.CondData.1 <- samples[,2]
             Copula.CondData.2 <- samples[,1]
         } else {
-            Copula.CondData.1 <- hkdecop(samples,
-                                         obj = pcfit,
-                                         cond.var = 1L)
-            Copula.CondData.2 <- hkdecop(samples,
-                                         obj = pcfit,
-                                         cond.var = 2L)
+            Copula.CondData.1 <- hbicop(samples,
+                                         pcfit,
+                                         cond_var = 1L)
+            Copula.CondData.2 <- hbicop(samples,
+                                         pcfit,
+                                         cond_var = 2L)
         }
 
 

@@ -65,6 +65,7 @@
 #' @importFrom foreach foreach %dopar%
 #' @importFrom parallel detectCores makeCluster stopCluster
 #' @importFrom doParallel registerDoParallel
+#' @importFrom rvinecopulib bicop hbicop dbicop
 #' @export
 kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                        mult = 1, test.level = NA, trunc.level = NA,
@@ -215,11 +216,7 @@ kdevinecop <- function(data, matrix = NA, method = "TLL2", renorm.iter = 3L,
                         cfit$info <- indepinfo
                     class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
-                    cfit <- kdecop(samples,
-                                   mult = mult,
-                                   method = method,
-                                   renorm.iter = renorm.iter,
-                                   info = info)
+                    cfit <- bicop(samples, mult = mult, family = "tll")
                 }
 
                 hfit <- list()

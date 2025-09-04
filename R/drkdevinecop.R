@@ -104,9 +104,7 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
                 if (any(class(cfit) == "indep.copula")) {
                     val[k-1, i, ] <- rep(1, nrow(ev))
                 } else {
-                    val[k-1, i, ] <- dkdecop(ev,
-                                             obj = cfit,
-                                             stable = stable)
+                    val[k-1, i, ] <- dbicop(ev, cfit)
                 }
 
                 if (k > 2) {
@@ -114,9 +112,7 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
                         if (any(class(cfit) == "indep.copula")) {
                             V$direct[k - 1, i, ] <- ev[,2]
                         } else {
-                            V$direct[k - 1, i, ] <- hkdecop(ev,
-                                                            obj = cfit,
-                                                            cond.var = 1L)
+                            V$direct[k - 1, i, ] <- hbicop(ev, cfit, cond_var = 1L)
                         }
                     }
 
@@ -124,9 +120,7 @@ dkdevinecop <- function(u, obj, stable = FALSE) {
                         if (any(class(cfit) == "indep.copula")) {
                             V$indirect[k - 1, i, ] <- ev[,1]
                         } else {
-                            V$indirect[k - 1, i, ] <- hkdecop(ev,
-                                                              obj = cfit,
-                                                              cond.var = 2L)
+                            V$indirect[k - 1, i, ] <- hbicop(ev, cfit, cond_var = 2L)
                         }
                     }
 
@@ -211,14 +205,14 @@ rkdevinecop <- function(n, obj, U = NULL, quasi = FALSE) {
                 res.ki$c$flip <- TRUE
 
             # invert h-function to create pseudo-data for next step
-            Vdirect[k, i, ] <- hkdecop(cbind(zz, Vdirect[k + 1, i, ]),
+            Vdirect[k, i, ] <- hbicop(cbind(zz, Vdirect[k + 1, i, ]),
                                        res.ki$c,
-                                       cond.var = 1,
+                                       cond_var = 1,
                                        inverse = TRUE)
             if ((i < d) & CondDistr$indirect[k + 1, i]) {
-                Vindirect[k + 1, i, ] <- hkdecop(cbind(zz, Vdirect[k, i, ]),
+                Vindirect[k + 1, i, ] <- hbicop(cbind(zz, Vdirect[k, i, ]),
                                                  res.ki$c,
-                                                 cond.var = 2)
+                                                 cond_var = 2)
             }
         }
     }
